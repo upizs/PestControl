@@ -1,0 +1,71 @@
+﻿@page
+@model PestControl.Web.Pages.Identity.LoginModel
+@{
+}
+
+<div class="card">
+    <div class="register-logo">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="card-body register-card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <section>
+                    <form id="account" method="post">
+                        <hr />
+                        <!--Username-->
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <span asp-validation-for="Input.Username" class="text-danger"></span>
+                        <div class="input-group mb-3">
+                            <input asp-for="Input.Username" type="text" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Username)">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Password-->
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <div class="input-group mb-3">
+                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Remember me-->
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <!--Submit-->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                        </div>
+                        <!--Other actions-->
+                        <div class="form-group">
+                            <p>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a asp-page="./Register">Register as a new user</a>
+                            </p>
+                        </div>
+
+                    </form>
+                    <!--/form-->
+                </section>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

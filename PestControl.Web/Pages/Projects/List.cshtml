@@ -1,0 +1,69 @@
+﻿@page
+@model PestControl.Web.Pages.Projects.ListModel
+@{
+}
+
+<h2>All Projects</h2>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">
+        @Model.Message
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Description)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().DateCreated)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().ApplicationUsers)</th>
+            <th scope="col">Actions</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var project in Model.Projects)
+        {
+            <tr>
+                <td scope="row">
+                    @project.Name
+                </td>
+                <td>
+                    @project.Description
+                </td>
+                <td>
+                    @project.DateCreated
+                </td>
+                <td>
+                    @if (project.ApplicationUsers.Any())
+                    {
+                        @project.ApplicationUsers.Count()
+                    }
+                    else
+                    {
+                        <p>0</p>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./AssignUsers"
+                       asp-route-projectId="@project.Id">Assign Users</a>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./Details"
+                       asp-route-projectId="@project.Id">Details</a>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./Edit"
+                       asp-route-projectId="@project.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm"
+                       asp-page="./Delete"
+                       asp-route-projectId="@project.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-primary"
+   asp-page="./Create">Add Project</a>

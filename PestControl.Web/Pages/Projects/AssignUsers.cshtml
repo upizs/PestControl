@@ -1,0 +1,99 @@
+﻿@page "{projectId:int}"
+@model PestControl.Web.Pages.Projects.AssignUsersModel
+@{
+}
+
+
+
+<h2> Assigne Users to @Model.Project.Name</h2>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">
+        @Model.Message
+    </div>
+}
+
+<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+<!--Assigned Users-->
+@if (Model.Project.ApplicationUsers.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.AssignedUsers.Single().UserName)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.AssignedUsers.Single().Email)</th>
+                <th scope="col"></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var user in Model.AssignedUsers)
+            {
+                <tr>
+                    <td scope="row">
+                        @user.UserName
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        <form asp-page-handler="remove" mothod="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            <input type="hidden" name="userToRemoveId" value="@user.Id" />
+                            <input type="hidden" asp-for="Project.Id" />
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+<!--All Users-->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().UserName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().Email)</th>
+            <th scope="col"></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td scope="row">
+                    @user.UserName
+                </td>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    <form asp-page-handler="assign" mothod="post">
+                        <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                        <input type="hidden" name="assignedUserId" value="@user.Id" />
+                        <input type="hidden" asp-for="Project.Id" />
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page=".\List" class="btn btn-primary">Done</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}
+
+
+

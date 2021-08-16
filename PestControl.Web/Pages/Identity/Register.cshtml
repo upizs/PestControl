@@ -1,0 +1,90 @@
+﻿@page
+@model PestControl.Web.Pages.Identity.RegisterModel
+@{
+}
+
+<div class="hold-transition register-box">
+    <div class="card">
+        <div class="register-logo">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+
+        <div class="card-body register-card-body">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <form method="post">
+
+                <!--User Name-->
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.UserName" type="text" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.UserName)">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Email-->
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.Email" type="email" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Email)">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--Password-->
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--ComfirmPassword-->
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.ConfirmPassword)">
+                    <div class="input-group-append">
+
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Submit-->
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+
+            </form>
+
+            <!--OAuth-->
+            @*<div class="social-auth-links text-center">
+                <p>- OR -</p>
+
+                <a href="#" class="btn btn-block btn-primary">
+                    <i class="fab fa-facebook mr-2"></i>
+                    Sign up using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i>
+                    Sign up using Google+
+                </a>
+                </div>*@
+
+            <a asp-page="./Login" class="text-center">I already have a membership</a>
+
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

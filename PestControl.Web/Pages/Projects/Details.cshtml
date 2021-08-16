@@ -1,0 +1,58 @@
+﻿@page "{projectId:int}"
+@model PestControl.Web.Pages.Projects.DetailsModel
+@{
+}
+
+<h2>@Model.Project.Name</h2>
+<p>@Model.Project.Description</p>
+<p>Created: @Model.Project.DateCreated</p>
+
+@if (Model.Project.ApplicationUsers.Any())
+{
+    <h4>Assigned Users @Model.Project.ApplicationUsers.Count()</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Project.ApplicationUsers.Single().UserName)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Project.ApplicationUsers.Single().Email)</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Project.ApplicationUsers.ToList())
+            {
+                <tr>
+                    <td scope="row">
+                        @user.UserName
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+
+                </tr>
+            }
+
+
+
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Assigned Users 0</p>
+}
+
+    <a class="btn btn-info btn-sm"
+       asp-page="./AssignUsers"
+       asp-route-projectId="@Model.Project.Id">Assign Users</a>
+    <a class="btn btn-info btn-sm"
+       asp-page="./Edit"
+       asp-route-projectId="@Model.Project.Id">Edit</a>
+    <a class="btn btn-danger btn-sm"
+       asp-page="./Delete"
+       asp-route-projectId="@Model.Project.Id">Delete</a>
+
+
+    <a class="btn btn-primary btn-sm"
+       asp-page="./List">Back To All Projects</a>
+

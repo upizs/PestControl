@@ -1,0 +1,27 @@
+﻿@page "{projectId:int}"
+@model PestControl.Web.Pages.Projects.EditModel
+@{
+}
+
+<h2>Editing @Model.Project.Name</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Project.Id" />
+    <input type="hidden" asp-for="Project.DateCreated" />
+
+    <div class="form-group">
+        <label asp-for="Project.Name"></label>
+        <input asp-for="Project.Name" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Project.Description"></label>
+        <input asp-for="Project.Description" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>

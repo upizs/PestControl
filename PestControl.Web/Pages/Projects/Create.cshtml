@@ -1,0 +1,30 @@
+﻿@page
+@model PestControl.Web.Pages.Projects.CreateModel
+@{
+}
+
+<h2>Create New Project</h2>
+
+<form method="post">
+
+    <!--Name-->
+    <div class="form-group">
+        <label asp-for="NewProject.Name"></label>
+        <input asp-for="NewProject.Name" class="form-control" />
+        @Html.ValidationMessageFor(model => model.NewProject.Name, "", new { @class = "text-danger" })
+    </div>
+    <!--Description-->
+    <div class="form-group">
+        <label asp-for="NewProject.Description"></label>
+        <input asp-for="NewProject.Description" class="form-control" />
+        @Html.ValidationMessageFor(model => model.NewProject.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}
