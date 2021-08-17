@@ -38,12 +38,20 @@ namespace PestControl.Data.Repositories
 
         public async Task<Ticket> FindByIdAsync(int id)
         {
-            return await _db.Tickets.FindAsync(id);
+            return await _db.Tickets
+                .Include(p => p.Project)
+                .Include(p=>p.AssignedUser)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<ICollection<Ticket>> GetAllAsync()
         {
-            return await _db.Tickets.OrderBy(p => p.DateCreated).ToListAsync();
+            
+            return await _db.Tickets
+                .Include(p => p.Project)
+                .Include(p => p.AssignedUser)
+                .OrderBy(p => p.DateCreated)
+                .ToListAsync();
         }
 
         public async Task<bool> SaveAsync()
@@ -61,6 +69,8 @@ namespace PestControl.Data.Repositories
             {
                 searchKey = searchKey.ToLower();
                 var result = _db.Tickets
+                    .Include(p => p.Project)
+                    .Include(p => p.AssignedUser)
                     .Where(p => p.Title.ToLower().Contains(searchKey)
                     || p.Description.ToLower().Contains(searchKey))
                     .OrderBy(p => p.DateCreated);
@@ -77,8 +87,29 @@ namespace PestControl.Data.Repositories
 
         public async Task<bool> UpdateAsync(Ticket updatedEntity)
         {
+            updatedEntity.DateUpdated = DateTimeOffset.Now;
             var entity = _db.Tickets.Attach(updatedEntity);
             entity.State = EntityState.Modified;
+            return await SaveAsync();
+        }
+
+        //Assign and Remove Users
+        public async Task<bool> AssignUser(string userId, int ticketId)
+        {
+            var ticket = await FindByIdAsync(ticketId);
+            ticket.AssignedUserId = userId;
+            ticket.DateUpdated = DateTimeOffset.Now;
+            ticket.Status = Status.Assigned;
+            return await SaveAsync();
+        }
+
+
+        public async Task<bool> RemoveUser(int ticketId)
+        {
+            var ticket = await FindByIdAsync(ticketId);
+            ticket.AssignedUserId = null;
+            ticket.DateUpdated = DateTimeOffset.Now;
+            ticket.Status = Status.NotAssigned;
             return await SaveAsync();
         }
     }

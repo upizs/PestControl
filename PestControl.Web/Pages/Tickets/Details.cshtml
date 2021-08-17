@@ -1,0 +1,30 @@
+﻿@page "{ticketId:int}"
+@model PestControl.Web.Pages.Tickets.DetailsModel
+@{
+}
+
+
+<h2>Details for @Model.Ticket.Title</h2>
+
+<p>Project : @Model.Ticket.Project.Name</p>
+<p>Type: @Model.Ticket.Type</p>
+<p>Description: @Model.Ticket.Description</p>
+<p>Priority: @Model.Ticket.Priority</p>
+<p>Status: @Model.Ticket.Status</p>
+<p>Assigned User: @Model.Ticket.AssignedUser</p>
+<p>Date Created: @Model.Ticket.DateCreated</p>
+<p>Date Updated: @Model.Ticket.DateUpdated</p>
+<p>Submited by: @Model.Ticket.SubmittedByUser</p>
+
+<!--Also a button for edit and all tickets for this project-->
+<a class="btn btn-info btn-sm"
+   asp-page="./AssignUser"
+   asp-route-ticketId="Ticket.Id">Assign User</a>
+<a asp-page=".\Edit" 
+   asp-route-ticketId="Ticket.Id" 
+   class="btn btn-primary">Edit</a>
+<a asp-page=".\Index" 
+   class="btn btn-primary">All Tickets</a>
+
+
+

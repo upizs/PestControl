@@ -1,0 +1,58 @@
+﻿@page "{ticketId:int}"
+@model PestControl.Web.Pages.Tickets.EditModel
+@{
+}
+
+<h2>Editing @Model.Ticket.Title</h2>
+
+<form method="post">
+    <!--All these are only allowed to be changed by computer-->
+    <input type="hidden" asp-for="Ticket.Id" />
+    <input type="hidden" asp-for="Ticket.DateCreated" />
+    <input type="hidden" asp-for="Ticket.Status" />
+    <input type="hidden" asp-for="Ticket.SubmittedUserId" />
+    <input type="hidden" asp-for="Ticket.DateUpdated" />
+    <input type="hidden" asp-for="Ticket.AssignedUserId" />
+
+    <div class="form-group">
+        <label asp-for="Ticket.Title"></label>
+        <input asp-for="Ticket.Title" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Ticket.Title, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Ticket.Description"></label>
+        <input asp-for="Ticket.Description" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Ticket.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <!--Priority-->
+    <div class="form-group">
+        <label asp-for="Ticket.Priority"></label>
+        <select class="form-control" asp-for="Ticket.Priority" asp-items="Model.Priorities">
+        </select>
+
+    </div>
+    <!--Type-->
+    <div class="form-group">
+        <label asp-for="Ticket.Type"></label>
+        <select class="form-control" asp-for="Ticket.Type" asp-items="Model.Types">
+        </select>
+
+    </div>
+    <!--Project-->
+    <div class="form-group">
+        <label asp-for="Ticket.ProjectId"></label>
+        <select class="form-control" asp-for="Ticket.ProjectId" asp-items="ViewBag.ProjectId">
+            @foreach (var project in Model.Projects)
+            {
+                <option value="@project.Id">@project.Name</option>
+            }
+        </select>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>

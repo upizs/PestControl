@@ -1,0 +1,54 @@
+﻿@page
+@model PestControl.Web.Pages.Tickets.CreateModel
+@{
+}
+<h2>Create New Project</h2>
+
+<form method="post">
+
+    <!--Name-->
+    <div class="form-group">
+        <label asp-for="NewTicket.Title"></label>
+        <input asp-for="NewTicket.Title" class="form-control" />
+        @Html.ValidationMessageFor(model => model.NewTicket.Title, "", new { @class = "text-danger" })
+    </div>
+    <!--Description-->
+    <div class="form-group">
+        <label asp-for="NewTicket.Description"></label>
+        <input asp-for="NewTicket.Description" class="form-control" />
+        @Html.ValidationMessageFor(model => model.NewTicket.Description, "", new { @class = "text-danger" })
+    </div>
+    <!--Priority-->
+    <div class="form-group">
+        <label asp-for="NewTicket.Priority"></label>
+        <select class="form-control" asp-for="NewTicket.Priority" asp-items="Model.Priorities">
+        </select>
+
+    </div>
+    <!--Type-->
+    <div class="form-group">
+        <label asp-for="NewTicket.Type"></label>
+        <select class="form-control" asp-for="NewTicket.Type" asp-items="Model.Types">
+        </select>
+
+    </div>
+    <!--Project-->
+    <div class="form-group">
+        <label asp-for="NewTicket.ProjectId"></label>
+        <select class="form-control" asp-for="NewTicket.ProjectId" asp-items="ViewBag.ProjectId">
+            @foreach (var project in Model.Projects)
+            {
+                <option value="@project.Id">@project.Name</option>
+            }
+        </select>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

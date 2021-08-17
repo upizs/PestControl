@@ -1,0 +1,12 @@
+﻿@page "{ticketId:int}"
+@model PestControl.Web.Pages.Tickets.DeleteModel
+@{
+}
+
+<h2 class="alert alert-danger">Are you sure you want to Delete @Model.Ticket.Title? </h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Ticket.Id" />
+    <button type="submit" class="btn btn-danger">Yes!</button>
+    <a asp-page="Index" class="btn btn-info">Cancel</a>
+</form>
