@@ -14,11 +14,24 @@ namespace PestControl.Data.Contracts
         Task<bool> RemoveUser( int ticketId);
 
         //Return how many tickets for requested project
+        Task<int> CountTicketsForProject(int projectId);
         //Return all the tickets for requested project
-        //Return all the tickets by priority
-        //Return all the tickets by status
-        //Return all the tickets by user
-        //Return all the tickets by type
+        Task<ICollection<Ticket>> GetAllTicketsForProject(int projectId);
+        //Return all the tickets by priority (create an overload with project)
+        Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority);
+        Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, int projectId);
+
+        //Return all the tickets by status(create an overload with project)
+        Task<ICollection<Ticket>> GetTicketsByStatus(Status status);
+        Task<ICollection<Ticket>> GetTicketsByStatus(Status status, int projectId);
+        //Return all the tickets by user(create an overload with project)
+        Task<ICollection<Ticket>> GetTicketsByUser(string userId);
+        Task<ICollection<Ticket>> GetTicketsByUser(string userId, int projectId);
+
+        //Return all the tickets by type(create an overload with project)
+        Task<ICollection<Ticket>> GetTicketsByType(Types type);
+        Task<ICollection<Ticket>> GetTicketsByType(Types type, int projectId);
+
 
     }
 }

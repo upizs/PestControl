@@ -47,6 +47,31 @@ namespace PestControl.Data.Repositories
             return await _db.Comments.OrderBy(p => p.Date).ToListAsync();
         }
 
+        public async Task<IEnumerable<Comment>> GetCommentsByProject(int projectId)
+        {
+            return await _db.Comments
+                .Where(c => c.ProjectId == projectId)
+                .Include(c => c.Author)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsByTicket(int ticketId)
+        {
+            return await _db.Comments
+                .Where(c => c.TicketId == ticketId)
+                .Include(c => c.Author)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsByUser(string userId)
+        {
+            return await _db.Comments
+                .Where(c => c.UserId == userId)
+                .Include(c => c.Project!)
+                .Include(c => c.Ticket!)
+                .ToListAsync();
+        }
+
         public async Task<bool> SaveAsync()
         {
             var changes = await _db.SaveChangesAsync();

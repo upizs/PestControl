@@ -1,4 +1,9 @@
 ﻿@page "{projectId:int}"
+@using Microsoft.AspNetCore.Identity
+@using PestControl.Data.Models;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model PestControl.Web.Pages.Projects.DetailsModel
 @{
 }
@@ -41,18 +46,43 @@ else
 {
     <p>Assigned Users 0</p>
 }
+@if (Model.Tickets.Any())
+{
+    <h4>Tickets</h4>
+    <partial name="_TicketTable" model="@Model.Tickets" />
+}
+@if (Model.Comments.Any()) 
+{
+    <h4>Comments</h4>
+    <partial name="_CommentTable" model="@Model.Comments" />
+}
 
-    <a class="btn btn-info btn-sm"
-       asp-page="./AssignUsers"
-       asp-route-projectId="@Model.Project.Id">Assign Users</a>
-    <a class="btn btn-info btn-sm"
-       asp-page="./Edit"
-       asp-route-projectId="@Model.Project.Id">Edit</a>
-    <a class="btn btn-danger btn-sm"
-       asp-page="./Delete"
-       asp-route-projectId="@Model.Project.Id">Delete</a>
+@if (SignInManager.IsSignedIn(User))
+{
+    <form method="post" asp-page-handler="comment">
+        <input type="hidden" asp-for="Project.Id" />
 
+        <div class="form-group">
+            <label asp-for="Comment.Message"></label>
+            <input asp-for="Comment.Message" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Comment.Message, "", new { @class = "text-danger" })
+        </div>
 
-    <a class="btn btn-primary btn-sm"
-       asp-page="./List">Back To All Projects</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+}
+
+<a class="btn btn-info btn-sm"
+   asp-page="./AssignUsers"
+   asp-route-projectId="@Model.Project.Id">Assign Users</a>
+<a class="btn btn-info btn-sm"
+   asp-page="./Edit"
+   asp-route-projectId="@Model.Project.Id">Edit</a>
+<a class="btn btn-danger btn-sm"
+   asp-page="./Delete"
+   asp-route-projectId="@Model.Project.Id">Delete</a>
+
+<a class="btn btn-primary btn-sm"
+   asp-page="./List">Back To All Projects</a>
 

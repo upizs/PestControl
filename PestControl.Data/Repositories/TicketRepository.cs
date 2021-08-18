@@ -112,5 +112,103 @@ namespace PestControl.Data.Repositories
             ticket.Status = Status.NotAssigned;
             return await SaveAsync();
         }
+
+        //Ticket interaction with project 
+        public async Task<int> CountTicketsForProject(int projectId)
+        {
+            return await _db.Tickets.Where(t => t.ProjectId == projectId).CountAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetAllTicketsForProject(int projectId)
+        {
+            return await _db.Tickets
+                .Where(t => t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t=>t.Project)
+                .OrderBy(t=> t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority)
+        {
+            return await _db.Tickets
+                .Where(t => t.Priority == priority)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, int projectId)
+        {
+            return await _db.Tickets
+                .Where(t => t.Priority == priority && t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByStatus(Status status)
+        {
+            return await _db.Tickets
+                .Where(t => t.Status == status)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByStatus(Status status, int projectId)
+        {
+            return await _db.Tickets
+                .Where(t => t.Status == status && t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByUser(string userId)
+        {
+            return await _db.Tickets
+                .Where(t => t.AssignedUserId == userId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByUser(string userId, int projectId)
+        {
+            return await _db.Tickets
+                .Where(t => t.AssignedUserId == userId && t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByType(Types type)
+        {
+            return await _db.Tickets
+                .Where(t => t.Type == type)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByType(Types type, int projectId)
+        {
+            return await _db.Tickets
+                .Where(t => t.Type == type && t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+
     }
 }

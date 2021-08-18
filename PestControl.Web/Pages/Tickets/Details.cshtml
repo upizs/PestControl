@@ -1,4 +1,9 @@
 ﻿@page "{ticketId:int}"
+@using Microsoft.AspNetCore.Identity
+@using PestControl.Data.Models;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model PestControl.Web.Pages.Tickets.DetailsModel
 @{
 }
@@ -16,14 +21,37 @@
 <p>Date Updated: @Model.Ticket.DateUpdated</p>
 <p>Submited by: @Model.Ticket.SubmittedByUser</p>
 
+@if (Model.Comments.Any())
+{
+    <h4>Comments</h4>
+    <partial name="_CommentTable" model="@Model.Comments" />
+}
 <!--Also a button for edit and all tickets for this project-->
+@if (SignInManager.IsSignedIn(User))
+{
+    <form method="post" asp-page-handler="comment">
+        <input type="hidden" asp-for="Ticket.Id" />
+
+        <div class="form-group">
+            <label asp-for="Comment.Message"></label>
+            <input asp-for="Comment.Message" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Comment.Message, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+}
+
+
+
 <a class="btn btn-info btn-sm"
    asp-page="./AssignUser"
    asp-route-ticketId="Ticket.Id">Assign User</a>
-<a asp-page=".\Edit" 
-   asp-route-ticketId="Ticket.Id" 
+<a asp-page=".\Edit"
+   asp-route-ticketId="Ticket.Id"
    class="btn btn-primary">Edit</a>
-<a asp-page=".\Index" 
+<a asp-page=".\Index"
    class="btn btn-primary">All Tickets</a>
 
 

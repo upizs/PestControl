@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace PestControl.Data.Models
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
         [Display(Name = "Date Created")]
         public DateTimeOffset DateCreated { get; set; }
+        [ForeignKey("CreatedById")]
+        [Display(Name="Created By")]
+        [NotMapped]
+        public ApplicationUser CreatedBy { get; set; }
+        public string CreatedById { get; set; }
 
     }
 }

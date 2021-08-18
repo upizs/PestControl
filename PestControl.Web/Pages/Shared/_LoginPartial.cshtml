@@ -1,0 +1,42 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using PestControl.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<ul class="nav navbar nav-pills flex-column ">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <i class="fas fa-user-alt"></i>
+                <p>@User.Identity.Name </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <form asp-area="Identity" asp-page="/Identity/Logout" >
+                <button type="submit" class="nav-link btn btn-link text-dark">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
+                </button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link " asp-area="Identity" asp-page="/Identity/Register">
+                <i class="fas fa-registered"></i>
+                <p>Register</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " asp-area="Identity" asp-page="/Identity/Login">
+                <i class="fas fa-door-open"></i>
+                <p>Login</p>
+            </a>
+        </li>
+    }
+</ul>

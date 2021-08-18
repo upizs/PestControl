@@ -1,0 +1,44 @@
+﻿@using PestControl.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<Comment>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Author.UserName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Message)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Date)</th>
+            <th></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var comment in Model)
+        {
+            <tr>
+                <td scope="row">@comment.Author.UserName</td>
+                <td>@comment.Message</td>
+                <td>@comment.Date</td>
+
+
+                <td>
+                    <!--If user is the same that wrote the comment can edit or remove it-->
+                    <!--Must also give this authority to Admin(Only to remove)-->
+                    @if(SignInManager.IsSignedIn(User) 
+                        && UserManager.GetUserId(User) == comment.UserId)
+                    {
+                        <a class="btn btn-info btn-sm"
+                           asp-page="./Edit"
+                           asp-route-ticketId="@comment.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm"
+                           asp-page="./Delete"
+                           asp-route-ticketId="@comment.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

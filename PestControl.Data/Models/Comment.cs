@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace PestControl.Data.Models
         public int? ProjectId { get; set; }
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }
-
+        [Required(ErrorMessage ="You need to write something to make a comment")]
         public string Message { get; set; }
         public DateTimeOffset Date { get; set; }
 

@@ -1,0 +1,61 @@
+﻿@using PestControl.Data.Models 
+@model IEnumerable<Ticket>
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Id)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Title)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Description)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Project)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Priority)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().AssignedUser)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Status)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().Type)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().SubmittedByUser)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Single().DateCreated)</th>
+            <th scope="col">Actions</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td scope="row">@ticket.Id</td>
+                <td>@ticket.Title</td>
+                <td>@ticket.Description</td>
+                <td>@ticket.Project.Name</td>
+                <td>@ticket.Priority</td>
+                <td>
+                    @if (ticket.AssignedUser != null)
+                        @ticket.AssignedUser.UserName
+                        else
+                        {<p>None</p>}
+
+                </td>
+                <td> @ticket.Status </td>
+                <td> @ticket.Type</td>
+                <td> <!--ticket.SubmittedByUser--> <p>none</p></td>
+                <td> @ticket.DateCreated.Date</td>
+
+                <td>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./AssignUser"
+                       asp-route-ticketId="@ticket.Id">Assign User</a>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./Details"
+                       asp-route-ticketId="@ticket.Id">Details</a>
+                    <a class="btn btn-info btn-sm"
+                       asp-page="./Edit"
+                       asp-route-ticketId="@ticket.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm"
+                       asp-page="./Delete"
+                       asp-route-ticketId="@ticket.Id">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
