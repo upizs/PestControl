@@ -53,7 +53,8 @@ namespace PestControl.Data.Models
         [Display(Name = "Submitted By")]
         public ApplicationUser SubmittedByUser { get; set; }
         public string SubmittedUserId { get; set; }
-       
+        public IList<Comment> Comments { get; set; } = new List<Comment>();
+
 
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "{ticketId:int}"
+﻿@page "Tickets/Edit/{ticketId:int}"
 @using Microsoft.AspNetCore.Identity
 @using PestControl.Data.Models;
 
@@ -6,6 +6,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @model PestControl.Web.Pages.Tickets.DetailsModel
 @{
+    ViewData["Title"] = "Ticket Details";
 }
 
 

@@ -78,7 +78,7 @@
                 </a>
                 </div>*@
 
-            <a asp-page="./Login" class="text-center">I already have a membership</a>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">I already have a membership</a>
 
         </div>
         <!-- /.form-box -->

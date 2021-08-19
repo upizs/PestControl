@@ -36,6 +36,8 @@ namespace PestControl.Web.Pages.Projects
         public Comment Comment { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
         public IEnumerable<Ticket> Tickets { get; set; }
+        [TempData]
+        public string Message { get; set; }
         public async Task<IActionResult> OnGet(int projectId)
         {
             Project = await _projectRepository.FindByIdAsync(projectId);
@@ -74,7 +76,6 @@ namespace PestControl.Web.Pages.Projects
                 Comment.Date = DateTimeOffset.Now;
                 Comment.ProjectId = projectId;
                 await _commentRepository.CreateAsync(Comment);
-                await _commentRepository.SaveAsync();
             }
 
             //Must Get comments after the new one is added to be responsive

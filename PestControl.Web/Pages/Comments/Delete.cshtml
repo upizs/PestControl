@@ -1,0 +1,13 @@
+﻿@page "{commentId:int}"
+@model PestControl.Web.Pages.Comments.DeleteModel
+@{
+    ViewData["Title"] = "Delete Comment";
+}
+
+<h2 class="alert alert-danger">Are you sure you want to Delete this Comment? </h2>
+<p>@Model.Comment.Message</p>
+<form method="post">
+    <input type="hidden" asp-for="Comment.Id" />
+    <button type="submit" class="btn btn-danger">Yes!</button>
+    <a href="@Model.ReturnUrl" class="btn btn-info">Cancel</a>
+</form>

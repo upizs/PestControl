@@ -19,17 +19,22 @@ namespace PestControl.Web.Pages.Identity
         {
             _signInManager = signInManager;
         }
+        public string ReturnUrl { get; set; }
 
-        public void OnGet()
+        public void OnGet(string returnUrl = null)
         {
+
+            returnUrl = returnUrl ?? Url.Content("/Index");
+            ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("/Index");
             await _signInManager.SignOutAsync();
-            
-            return RedirectToPage("../Index");
-            
+
+            return Redirect("~" + returnUrl);
+
         }
     }
 }

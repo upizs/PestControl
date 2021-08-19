@@ -1,0 +1,25 @@
+﻿@page "{commentId:int}"
+@model PestControl.Web.Pages.Comments.EditModel
+@{
+}
+
+
+<h2>Editing Comment</h2>
+
+<form method="post" >
+    <input type="hidden" asp-for="Comment.Id" />
+    <input type="hidden" asp-for="Comment.Date" />
+    <input type="hidden" asp-for="Comment.UserId" />
+    <input type="hidden" asp-for="Comment.ProjectId" />
+    <input type="hidden" asp-for="Comment.TicketId" />
+
+    <div class="form-group">
+        <label asp-for="Comment.Message"></label>
+        <input asp-for="Comment.Message" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Comment.Message, "", new { @class = "text-danger" })
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>

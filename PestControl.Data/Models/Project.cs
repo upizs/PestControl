@@ -31,6 +31,8 @@ namespace PestControl.Data.Models
         [NotMapped]
         public ApplicationUser CreatedBy { get; set; }
         public string CreatedById { get; set; }
+        public IList<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public IList<Comment> Comments { get; set; } = new List<Comment>();
 
     }
 }

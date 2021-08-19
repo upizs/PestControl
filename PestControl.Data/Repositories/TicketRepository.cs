@@ -27,7 +27,11 @@ namespace PestControl.Data.Repositories
 
         public async Task<bool> DeleteAsync(Ticket entity)
         {
-            _db.Tickets.Remove(entity);
+            //Have to include all these to make Cascade deletion
+            var ticket = await _db.Tickets
+                .Include(t=>t.Comments)
+                .FirstOrDefaultAsync(t => t.Id == entity.Id);
+            _db.Tickets.Remove(ticket);
             return await SaveAsync();
         }
 

@@ -33,6 +33,9 @@ namespace PestControl.Web.Pages.Tickets
         [BindProperty]
         public Comment Comment { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+        [TempData]
+        public string Message { get; set; }
+        
         public async Task<IActionResult> OnGet(int ticketId)
         {
             //Also Get all the coments for this ticket
@@ -66,7 +69,6 @@ namespace PestControl.Web.Pages.Tickets
                 Comment.Date = DateTimeOffset.Now;
                 Comment.TicketId = ticketId;
                 await _commentRepository.CreateAsync(Comment);
-                await _commentRepository.SaveAsync();
             }
             
             Comments = await _commentRepository.GetCommentsByTicket(ticketId);

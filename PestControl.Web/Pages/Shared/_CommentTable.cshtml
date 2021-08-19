@@ -1,5 +1,7 @@
-﻿@using PestControl.Data.Models
+﻿
+@using PestControl.Data.Models
 @using Microsoft.AspNetCore.Identity
+
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -27,15 +29,17 @@
                 <td>
                     <!--If user is the same that wrote the comment can edit or remove it-->
                     <!--Must also give this authority to Admin(Only to remove)-->
-                    @if(SignInManager.IsSignedIn(User) 
-                        && UserManager.GetUserId(User) == comment.UserId)
+                    @if (SignInManager.IsSignedIn(User)
+                       && UserManager.GetUserId(User) == comment.UserId)
                     {
                         <a class="btn btn-info btn-sm"
-                           asp-page="./Edit"
-                           asp-route-ticketId="@comment.Id">Edit</a>
+                           asp-page="/Comments/Edit"
+                           asp-route-commentId="@comment.Id"
+                           asp-route-returnUrl="@Context.Request.Path">Edit</a>
                         <a class="btn btn-danger btn-sm"
-                           asp-page="./Delete"
-                           asp-route-ticketId="@comment.Id">Delete</a>
+                           asp-page="/Comments/Delete"
+                           asp-route-commentId="@comment.Id"
+                           asp-route-returnUrl="@Context.Request.Path">Delete</a>
                     }
                 </td>
             </tr>

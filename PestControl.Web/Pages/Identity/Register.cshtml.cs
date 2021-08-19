@@ -28,15 +28,22 @@ namespace PestControl.Web.Pages.Identity
         [BindProperty]
         public RegisterUserInputModel Input { get; set; }
 
-
-        public void OnGet()
+        public string ReturnUrl { get; set; }
+        public IActionResult OnGet(string returnUrl = null)
         {
+            //Restrict logged in users to use register page
+            if (_signInManager.IsSignedIn(User))
+                return RedirectToPage("/Index");
+            returnUrl = returnUrl ?? Url.Content("/Index");
+            ReturnUrl = returnUrl;
 
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            
+            returnUrl = returnUrl ?? Url.Content("/Index");
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -52,7 +59,8 @@ namespace PestControl.Web.Pages.Identity
                     //TODO: assign role in registration
                    
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("../Index");
+                    return Redirect("~" + returnUrl);
+
                 }
 
                 foreach (var error in result.Errors)
