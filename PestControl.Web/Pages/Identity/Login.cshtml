@@ -1,18 +1,18 @@
 ﻿@page
 @model PestControl.Web.Pages.Identity.LoginModel
 @{
+    ViewData["Title"] = "Login";
 }
 
-<div class="card">
-    <div class="register-logo">
-        <h1>@ViewData["Title"]</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h6>
     </div>
-    <div class="card-body register-card-body">
+    <div class="card-body">
         <div class="row">
             <div class="col-md-4">
                 <section>
                     <form id="account" method="post">
-                        <hr />
                         <!--Username-->
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <span asp-validation-for="Input.Username" class="text-danger"></span>

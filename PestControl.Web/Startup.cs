@@ -53,7 +53,9 @@ namespace PestControl.Web
                 options.Password.RequiredLength = 5;
             })
                 .AddEntityFrameworkStores<AuthDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
+
 
             //This fix has been taken from stackoverflow, because singinmanager failed login
             //services.Configure<PasswordHasherOptions>(options =>
@@ -83,8 +85,8 @@ namespace PestControl.Web
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
