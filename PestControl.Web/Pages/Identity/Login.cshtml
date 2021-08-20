@@ -10,7 +10,10 @@
     <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
 </div>
 <!--Username-->
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form class="user" method="post">
+
     <span asp-validation-for="Input.Username" class="text-danger"></span>
     <div class="form-group">
         <input type="text" asp-for="Input.Username" class="form-control form-control-user"
@@ -41,22 +44,22 @@
     <hr />
     <div class="form-group">
         <div class="text-center">
-            <a  asp-page="/Identity/ForgotPassword">Forgot your password?</a>
+            <a asp-page="/Identity/ForgotPassword">Forgot your password?</a>
         </div>
-            <div class="text-center">
-                <a asp-page="/Identity/Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                
-            </div>
+        <div class="text-center">
+            <a asp-page="/Identity/Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+
         </div>
+    </div>
 
 </form>
 @*<hr>
-<a href="index.html" class="btn btn-google btn-user btn-block">
-    <i class="fab fa-google fa-fw"></i> Login with Google
-</a>
-<a href="index.html" class="btn btn-facebook btn-user btn-block">
-    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-</a>*@
+    <a href="index.html" class="btn btn-google btn-user btn-block">
+        <i class="fab fa-google fa-fw"></i> Login with Google
+    </a>
+    <a href="index.html" class="btn btn-facebook btn-user btn-block">
+        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+    </a>*@
 <!--/form-->
 
 @section Scripts {

@@ -6,86 +6,58 @@
 
 }
 
-<div class="hold-transition register-box">
-    <div class="card">
-        <div class="register-logo">
-            <h1>@ViewData["Title"]</h1>
-        </div>
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
+</div>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form class="user" method="post">
 
-        <div class="card-body register-card-body">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <form method="post">
+    <!--User Name-->
+    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+    <div class="form-group">
+        <input type="text" asp-for="Input.UserName" class="form-control form-control-user"
+                aria-describedby="emailHelp"
+                placeholder="@Html.DisplayNameFor(model => model.Input.UserName)">
+    </div>
 
-                <!--User Name-->
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                <div class="input-group mb-3">
-                    <input asp-for="Input.UserName" type="text" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.UserName)">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
+    <!--Email-->
+    <span asp-validation-for="Input.Email" class="text-danger"></span>
+    <div class="form-group">
+        <input asp-for="Input.Email" type="email"
+                class="form-control form-control-user"
+                placeholder="@Html.DisplayNameFor(model => model.Input.Email)">
 
-                <!--Email-->
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-                <div class="input-group mb-3">
-                    <input asp-for="Input.Email" type="email" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Email)">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <!--Password-->
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-                <div class="input-group mb-3">
-                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <!--ComfirmPassword-->
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                <div class="input-group mb-3">
-                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.ConfirmPassword)">
-                    <div class="input-group-append">
+    </div>
+    <!--Password-->
+    <span asp-validation-for="Input.Password" class="text-danger"></span>
+    <div class="form-group">
+        <input asp-for="Input.Password" type="password" 
+                class="form-control form-control-user"
+                placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
+                    
+    </div>
+    <!--ComfirmPassword-->
+    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    <div class="form-group">
+        <input asp-for="Input.ConfirmPassword" type="password"
+                class="form-control form-control-user"
+                placeholder="@Html.DisplayNameFor(model => model.Input.ConfirmPassword)">
 
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
+    </div>
 
 
-                <!--Submit-->
+    <!--Submit-->
 
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
+    <button type="submit" class="btn btn-primary btn-user btn-block">
+        Register
+    </button>
 
 
-            </form>
+</form>
 
-            <!--OAuth-->
-            @*<div class="social-auth-links text-center">
-                <p>- OR -</p>
-
-                <a href="#" class="btn btn-block btn-primary">
-                    <i class="fab fa-facebook mr-2"></i>
-                    Sign up using Facebook
-                </a>
-                <a href="#" class="btn btn-block btn-danger">
-                    <i class="fab fa-google-plus mr-2"></i>
-                    Sign up using Google+
-                </a>
-                </div>*@
-
-            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">I already have a membership</a>
-
-        </div>
-        <!-- /.form-box -->
-    </div><!-- /.card -->
+<hr />
+<div class="text-center">
+    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">I already have a membership</a>
 </div>
 
 @section Scripts {
