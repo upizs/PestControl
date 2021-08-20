@@ -2,70 +2,66 @@
 @model PestControl.Web.Pages.Identity.LoginModel
 @{
     ViewData["Title"] = "Login";
+    Layout = "_RestrictedLayout";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h6>
+
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
+</div>
+<!--Username-->
+<form class="user" method="post">
+    <span asp-validation-for="Input.Username" class="text-danger"></span>
+    <div class="form-group">
+        <input type="text" asp-for="Input.Username" class="form-control form-control-user"
+               aria-describedby="emailHelp"
+               placeholder="@Html.DisplayNameFor(model => model.Input.Username)">
     </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-4">
-                <section>
-                    <form id="account" method="post">
-                        <!--Username-->
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <span asp-validation-for="Input.Username" class="text-danger"></span>
-                        <div class="input-group mb-3">
-                            <input asp-for="Input.Username" type="text" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Username)">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Password-->
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        <div class="input-group mb-3">
-                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Remember me-->
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label asp-for="Input.RememberMe">
-                                    <input asp-for="Input.RememberMe" />
-                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
-                                </label>
-                            </div>
-                        </div>
-                        <!--Submit-->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Log in</button>
-                        </div>
-                        <!--Other actions-->
-                        <div class="form-group">
-                            <p>
-                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                            </p>
-                            <p>
-                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                            </p>
-                        </div>
+    <span asp-validation-for="Input.Password" class="text-danger"></span>
 
-                    </form>
-                    <!--/form-->
-                </section>
-            </div>
-
+    <div class="form-group">
+        <input asp-for="Input.Password"
+               type="password" class="form-control form-control-user"
+               id="exampleInputPassword"
+               placeholder="@Html.DisplayNameFor(model => model.Input.Password)">
+    </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox small">
+            <input asp-for="Input.RememberMe" type="checkbox"
+                   class="custom-control-input">
+            <label class="custom-control-label" asp-for="Input.RememberMe">
+            </label>
         </div>
     </div>
-</div>
+    <!--Submit-->
+    <button type="submit" class="btn btn-primary btn-user btn-block">
+        Login
+    </button>
+    <!--Other actions-->
+    <hr />
+    <div class="form-group">
+        <div class="text-center">
+            <a  asp-page="/Identity/ForgotPassword">Forgot your password?</a>
+        </div>
+            <div class="text-center">
+                <a asp-page="/Identity/Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                
+            </div>
+        </div>
+
+</form>
+@*<hr>
+<a href="index.html" class="btn btn-google btn-user btn-block">
+    <i class="fab fa-google fa-fw"></i> Login with Google
+</a>
+<a href="index.html" class="btn btn-facebook btn-user btn-block">
+    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+</a>*@
+<!--/form-->
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+
