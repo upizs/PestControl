@@ -28,12 +28,11 @@ namespace PestControl.Web.Pages.Identity
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost()
         {
-            returnUrl = returnUrl ?? Url.Content("/Index");
             await _signInManager.SignOutAsync();
 
-            return Redirect("~" + returnUrl);
+            return Page();
 
         }
     }

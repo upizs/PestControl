@@ -5,8 +5,16 @@
     Layout = "_RestrictedLayout";
 
 }
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
+</div>
 
-<header>
-    <h1>@ViewData["Title"]</h1>
+<div class="text-center">
     <p>You have successfully logged out of the application.</p>
-</header>
+</div>
+<div class="text-center user">
+    <a class="btn btn-primary btn-user btn-block"  asp-page="/Identity/Login">
+        
+        <span class="text-center">Login</span>
+    </a>
+</div>

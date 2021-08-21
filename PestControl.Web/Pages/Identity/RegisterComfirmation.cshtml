@@ -7,28 +7,25 @@
 }
 
 
-<p></p>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h6>
-    </div>
-    @if (Model.DisplayConfirmAccountLink)
-    {
-        <div class="card-body">
-            <p>
-                This app does not currently have a real email sender registered.
-                Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-            </p>
-        </div>
-    }
-    else
-    {
-        <div class="card-body">
-            <p>
-                Please check your email to confirm your account
-            </p>
-        </div>
-    }
-
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
 </div>
+
+@if (Model.DisplayConfirmAccountLink)
+{
+    <div class="text-center">
+        <p>
+            This app does not currently have a real email sender registered.
+            Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+        </p>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <p>
+            Please check your email to confirm your account
+        </p>
+    </div>
+}
+
