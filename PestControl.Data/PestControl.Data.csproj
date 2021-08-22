@@ -1,15 +1,62 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.esm.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.esm.js.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+    <Content Remove="C:\Users\Custom\.nuget\packages\bootstrap\5.1.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

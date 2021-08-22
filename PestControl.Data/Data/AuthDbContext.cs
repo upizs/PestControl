@@ -29,7 +29,6 @@ namespace PestControl.Data.Data
                                                .Ignore(c => c.ConcurrencyStamp)
                                                .Ignore(c => c.PhoneNumber)
                                                .Ignore(c => c.PhoneNumberConfirmed)
-                                               .Ignore(c => c.SecurityStamp)
                                                .Ignore(c => c.LockoutEnd)
                                                .Ignore(c => c.TwoFactorEnabled);//and so on...
 

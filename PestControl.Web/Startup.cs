@@ -45,8 +45,8 @@ namespace PestControl.Web
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 //set up easy password rules for easier developing life
-                options.SignIn.RequireConfirmedAccount = false;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
