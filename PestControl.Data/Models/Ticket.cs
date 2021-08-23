@@ -23,11 +23,17 @@ namespace PestControl.Data.Models
     }
     public enum Status
     {
+        [Display(Name = "Not assigned")]
         NotAssigned,
+        [Display(Name = "Assigned")]
+
         Assigned,
+        [Display(Name = "In progress")]
         InProgress,
-        PendingApproval,
-        Fixed
+        [Display(Name = "Done")]
+        Done,
+        [Display(Name = "Closed")]
+        Closed
     }
     public class Ticket
     {

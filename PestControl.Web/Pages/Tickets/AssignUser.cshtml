@@ -78,7 +78,7 @@
     </tbody>
 </table>
 
-<a asp-page=".\Index" class="btn btn-primary">Done</a>
+<a asp-page="/Details" asp-route-ticketId="@Model.Ticket.Id" class="btn btn-primary">Done</a>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

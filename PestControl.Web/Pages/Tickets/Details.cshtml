@@ -39,20 +39,44 @@
             @Html.ValidationMessageFor(model => model.Comment.Message, "", new { @class = "text-danger" })
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Add</button>
 
+    </form>
+}
+@if (UserManager.GetUserId(User) == Model.Ticket.AssignedUserId
+   && Model.Ticket.Status == Status.Assigned)
+{
+    <form method="post" asp-page-handler="inprogress">
+        <input type="hidden" asp-for="Ticket.Id" />
+        <button type="submit" class="btn btn-info btn-icon-split ">
+            <span class="icon text-white"><i class="fas fa-keyboard"></i></span>
+            <span class="text">Start working on!</span>
+        </button>
+    </form>
+
+}
+@if (UserManager.GetUserId(User) == Model.Ticket.AssignedUserId
+ && Model.Ticket.Status == Status.InProgress)
+{
+    <form method="post" asp-page-handler="done">
+        <input type="hidden" asp-for="Ticket.Id" />
+        <button type="submit" class="btn btn-success btn-icon-split ">
+            <span class="icon text-white"><i class="fas fa-check"></i></span>
+            <span class="text">Done!</span>
+        </button>
     </form>
 }
 
 
 
-<a class="btn btn-info btn-sm"
-   asp-page="./AssignUser"
-   asp-route-ticketId="Ticket.Id">Assign User</a>
-<a asp-page=".\Edit"
-   asp-route-ticketId="Ticket.Id"
+<a class="btn btn-info"
+   asp-page="/Tickets/AssignUser"
+   asp-route-ticketId="@Model.Ticket.Id">Assign User</a>
+<a asp-page="/Tickets/Edit"
+   asp-route-ticketId="@Model.Ticket.Id"
    class="btn btn-primary">Edit</a>
-<a asp-page=".\Index"
+
+<a asp-page="/Tickets/Index"
    class="btn btn-primary">All Tickets</a>
 
 

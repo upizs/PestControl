@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PestControl.Data.Models;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PestControl.Data.Data
 {
-    public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class AuthDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
@@ -21,6 +22,7 @@ namespace PestControl.Data.Data
 
         //I use model builder to remove all the unnecessary rows (dont see value in them yet) 
         //Found out what Normalized User Name and Email are for, allowed them back in the DB.
+        //Found out what SecurityStamp is for therefor its back as well. 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

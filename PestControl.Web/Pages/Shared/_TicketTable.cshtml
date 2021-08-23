@@ -1,4 +1,5 @@
 ﻿@using PestControl.Data.Models 
+@using System.ComponentModel.DataAnnotations
 @model IEnumerable<Ticket>
 @{
 }
@@ -22,6 +23,7 @@
     <tbody>
         @foreach (var ticket in Model)
         {
+            
             <tr>
                 <td scope="row">@ticket.Id</td>
                 <td>@ticket.Title</td>
@@ -35,7 +37,10 @@
                         {<p>None</p>}
 
                 </td>
-                <td> @ticket.Status </td>
+                @{ 
+                    var status = ticket.Status.GetAttribute<DisplayAttribute>();
+                }  
+                <td> @Html.DisplayName(status.Name) </td>
                 <td> @ticket.Type</td>
                 <td> <!--ticket.SubmittedByUser--> <p>none</p></td>
                 <td> @ticket.DateCreated.Date</td>
@@ -56,6 +61,7 @@
 
                 </td>
             </tr>
+            
         }
     </tbody>
 </table>

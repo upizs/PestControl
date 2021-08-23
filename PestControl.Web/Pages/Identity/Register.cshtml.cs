@@ -65,6 +65,7 @@ namespace PestControl.Web.Pages.Identity
                 //Email comfirmation is taken out for easier registration
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Developer").Wait();
                     //Email confirmation
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

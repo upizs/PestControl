@@ -42,7 +42,7 @@ namespace PestControl.Web
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 //set up easy password rules for easier developing life
                 options.SignIn.RequireConfirmedAccount = true;
@@ -56,18 +56,17 @@ namespace PestControl.Web
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
-
-            //This fix has been taken from stackoverflow, because singinmanager failed login
-            //services.Configure<PasswordHasherOptions>(options =>
-            //    options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2);
-
-
-
             services.AddRazorPages();
         }
 
+        
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -87,6 +86,8 @@ namespace PestControl.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            SeedData.Seed(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>
             {

@@ -79,5 +79,57 @@ namespace PestControl.Web.Pages.Tickets
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostDone(int ticketId)
+        {
+            Ticket = await _ticketRepository.FindByIdAsync(ticketId);
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (Ticket == null)
+                RedirectToPage("./NotFound");
+
+            if (!_signInManager.IsSignedIn(User))
+            {
+                ModelState.AddModelError("", "You need to be signed in to make a comment.");
+            }
+            else if (user.Id == ticketId)
+                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
+            else
+            {
+                Ticket.Status = Status.Done;
+                await _ticketRepository.SaveAsync();
+               
+            }
+
+            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostInProgress(int ticketId)
+        {
+            Ticket = await _ticketRepository.FindByIdAsync(ticketId);
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (Ticket == null)
+                RedirectToPage("./NotFound");
+
+            if (!_signInManager.IsSignedIn(User))
+            {
+                ModelState.AddModelError("", "You need to be signed in to make a comment.");
+            }
+            else if (user.Id == ticketId)
+                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
+            else
+            {
+                Ticket.Status = Status.InProgress;
+                await _ticketRepository.SaveAsync();
+
+            }
+
+            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+
+            return Page();
+        }
     }
 }
