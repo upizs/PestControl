@@ -1,0 +1,47 @@
+﻿@page
+@model PestControl.Web.Pages.Identity.Admin.RoleManagerModel
+@{
+    ViewData["Title"] = "Role manager";
+}
+
+
+<!--All Users-->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().UserName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().Email)</th>
+            <th scope="col">Roles</th>
+            <th scope="col"></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td scope="row">
+                    @user.UserName
+                </td>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    <form asp-page-handler="assign" mothod="post">
+                        <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                        <input type="hidden" name="assignedUserId" value="@user.Id" />
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page=".\List" class="btn btn-primary">Done</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}
+

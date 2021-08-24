@@ -25,5 +25,17 @@ namespace PestControl.Web.Pages.Tickets
         {
             Tickets = await _ticketRepository.GetAllAsync();
         }
+
+        public async Task<IActionResult> OnPostNotDone()
+        {
+            Tickets = await _ticketRepository.GetAllNotDoneTickets();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDone()
+        {
+            Tickets = await _ticketRepository.GetTicketsByStatus(Status.Done);
+            return Page();
+        }
     }
 }

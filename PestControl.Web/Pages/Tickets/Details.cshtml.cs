@@ -83,7 +83,7 @@ namespace PestControl.Web.Pages.Tickets
         public async Task<IActionResult> OnPostDone(int ticketId)
         {
             Ticket = await _ticketRepository.FindByIdAsync(ticketId);
-            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             if (Ticket == null)
                 RedirectToPage("./NotFound");
@@ -92,7 +92,7 @@ namespace PestControl.Web.Pages.Tickets
             {
                 ModelState.AddModelError("", "You need to be signed in to make a comment.");
             }
-            else if (user.Id == ticketId)
+            else if (user.Id != Ticket.AssignedUserId)
                 ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
             else
             {
@@ -109,7 +109,8 @@ namespace PestControl.Web.Pages.Tickets
         public async Task<IActionResult> OnPostInProgress(int ticketId)
         {
             Ticket = await _ticketRepository.FindByIdAsync(ticketId);
-            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            
 
             if (Ticket == null)
                 RedirectToPage("./NotFound");
@@ -118,7 +119,7 @@ namespace PestControl.Web.Pages.Tickets
             {
                 ModelState.AddModelError("", "You need to be signed in to make a comment.");
             }
-            else if (user.Id == ticketId)
+            else if (user.Id != Ticket.AssignedUserId)
                 ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
             else
             {
@@ -128,6 +129,7 @@ namespace PestControl.Web.Pages.Tickets
             }
 
             Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+
 
             return Page();
         }

@@ -4,6 +4,27 @@
 }
 
 <h2>All Tickets</h2>
+<!--Show all Not done tickets button-->
+<form method="post" asp-page-handler="notdone">
+    <button type="submit" class="btn btn-warning btn-icon-split ">
+        <span class="icon text-white"><i class="fas fa-exclamation"></i>
+        <span class="text">Show all not done tickets</span>
+    </button>
+</form>
+<!--Show all Done tickets button-->
+
+<form method="post" asp-page-handler="done">
+    <button type="submit" class="btn btn-success btn-icon-split ">
+        <span class="icon text-white"><i class="fas fa-check"></i></span>
+        <span class="text">Show done tickets</span>
+    </button>
+</form>
+
+<a asp-page="/Tickets/Index"
+   class="btn btn-primary btn-icon-split">
+    <span class="icon text-white"><i class="fas fa-list-ul"></i></span>
+    <span class="text">All tickets</span>
+</a>
 
 @if (Model.Message != null)
 {

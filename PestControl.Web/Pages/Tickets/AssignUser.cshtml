@@ -1,6 +1,7 @@
 ﻿@page "{ticketId:int}"
 @model PestControl.Web.Pages.Tickets.AssignUserModel
 @{
+    ViewData["Title"] = "Assign Users";
 }
 
 
@@ -78,7 +79,7 @@
     </tbody>
 </table>
 
-<a asp-page="/Details" asp-route-ticketId="@Model.Ticket.Id" class="btn btn-primary">Done</a>
+<a asp-page="/Tickets/Details" asp-route-ticketId="@Model.Ticket.Id" class="btn btn-primary">Done</a>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

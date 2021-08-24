@@ -22,6 +22,20 @@ namespace PestControl.Data.Contracts
         Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, int projectId);
 
         //Return all the tickets by status(create an overload with project)
+        /// <summary>
+        /// Gets all the tickets in system that are not done
+        /// Excluding Done and Closed
+        /// </summary>
+        /// <returns>Collection of tickets</returns>
+        Task<ICollection<Ticket>> GetAllNotDoneTickets();
+        /// <summary>
+        /// Gets all not done tickets for specific project
+        /// Excluding Done and Closed
+        /// </summary>
+        /// <param name="projectId">Project id</param>
+        /// <returns>Collection of tickets</returns>
+        Task<ICollection<Ticket>> GetAllNotDoneTickets(int projectId);
+
         Task<ICollection<Ticket>> GetTicketsByStatus(Status status);
         Task<ICollection<Ticket>> GetTicketsByStatus(Status status, int projectId);
         //Return all the tickets by user(create an overload with project)

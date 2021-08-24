@@ -26,7 +26,6 @@ namespace PestControl.Data.Models
         [Display(Name = "Not assigned")]
         NotAssigned,
         [Display(Name = "Assigned")]
-
         Assigned,
         [Display(Name = "In progress")]
         InProgress,
