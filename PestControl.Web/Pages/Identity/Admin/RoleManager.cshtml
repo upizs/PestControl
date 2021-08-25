@@ -1,4 +1,9 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using PestControl.Data.Models;
+
+@inject UserManager<ApplicationUser> UserManager
+
 @model PestControl.Web.Pages.Identity.Admin.RoleManagerModel
 @{
     ViewData["Title"] = "Role manager";
@@ -19,6 +24,7 @@
     <tbody>
         @foreach (var user in Model.Users)
         {
+
             <tr>
                 <td scope="row">
                     @user.UserName
@@ -26,14 +32,34 @@
                 <td>
                     @user.Email
                 </td>
+                @{ 
+                    var roles = await UserManager.GetRolesAsync(user);
+                    var currentRole = roles.SingleOrDefault();
+                }
                 <td>
-                    <form asp-page-handler="assign" mothod="post">
-                        <button type="submit" class="btn btn-primary btn-sm">Assign</button>
-                        <input type="hidden" name="assignedUserId" value="@user.Id" />
-                    </form>
+                    @currentRole
                 </td>
+                <!--Roles-->
+                <td>
+                    <form method="post">
 
+                        <div class="form-group">
+                            <label asp-for="Roles"></label>
+                            <select class="form-control" asp-for="RoleToAssingId">
+                                @foreach (var role in Model.Roles)
+                                {
+                                    <option value="@role.Id">@role.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                        <input type="hidden" name="userId" value="@user.Id" />
+                    </form>
+
+                </td>
             </tr>
+
         }
     </tbody>
 </table>

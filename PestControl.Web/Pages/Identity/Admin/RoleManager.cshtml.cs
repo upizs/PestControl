@@ -23,17 +23,38 @@ namespace PestControl.Web.Pages.Identity.Admin
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        
+
         public IEnumerable<ApplicationUser> Users { get; set; }
+        public IEnumerable<IdentityRole> Roles { get; set; }
+
 
         public ApplicationUser UserToChangeRole { get; set; }
-        public IEnumerable<IdentityRole> Roles { get; set; }
+        [BindProperty]
+        public string RoleToAssingId { get; set; }
 
         public async Task OnGet()
         {
             Users = await _userManager.Users.ToListAsync();
             Roles = await _roleManager.Roles.ToListAsync();
 
+        }
+
+        public async Task<IActionResult> OnPost(string userId)
+        {
+            UserToChangeRole = await _userManager.FindByIdAsync(userId);
+            
+            var role = await _roleManager.FindByIdAsync(RoleToAssingId);
+            if (UserToChangeRole == null)
+                return RedirectToPage("/Identity/NotFound");
+            if (await _roleManager.RoleExistsAsync(role.Name))
+            {
+               await  _userManager.AddToRoleAsync(UserToChangeRole, role.Name);
+            }
+
+            Users = await _userManager.Users.ToListAsync();
+            Roles = await _roleManager.Roles.ToListAsync();
+
+            return Page();
         }
     }
 }

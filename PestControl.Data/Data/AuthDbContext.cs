@@ -21,14 +21,14 @@ namespace PestControl.Data.Data
         public DbSet<Comment> Comments { get; set; }
 
         //I use model builder to remove all the unnecessary rows (dont see value in them yet) 
-        //Found out what Normalized User Name and Email are for, allowed them back in the DB.
-        //Found out what SecurityStamp is for therefor its back as well. 
+        //Found out what Normalized Columns, Security Stamp,
+        //Concurency are for, allowed them back in the DB.
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicationUser>().Ignore(c => c.AccessFailedCount)
                                                .Ignore(c => c.LockoutEnabled)
-                                               .Ignore(c => c.ConcurrencyStamp)
                                                .Ignore(c => c.PhoneNumber)
                                                .Ignore(c => c.PhoneNumberConfirmed)
                                                .Ignore(c => c.LockoutEnd)

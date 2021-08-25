@@ -62,8 +62,6 @@
                     Interface
                 </div>
 
-                <!-- Nav Item - Pages Collapse Menu -->
-                <!-- Nav Item - Utilities Collapse Menu -->
                 <!-- Nav Item - Projects -->
                 <li class="nav-item">
                     <a class="nav-link" asp-page="/Projects/List">
@@ -78,6 +76,16 @@
                         <span>Tickets</span>
                     </a>
                 </li>
+                @if (User.IsInRole("Admin"))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Identity/Admin/RoleManager">
+                            <i class="fas fa-bug"></i>
+                            <span>Role Manager</span>
+                        </a>
+                    </li>
+                }
 
 
                 <!-- Divider -->
@@ -133,7 +141,7 @@
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
 
-                
+
 
             </ul>
             <!-- End of Sidebar -->
