@@ -40,7 +40,9 @@ namespace PestControl.Web.Pages.Identity
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    return RedirectToPage("./ForgotPasswordConfirmation",
+
+                            new { email = Input.Email, returnUrl = string.Empty });
                 }
 
                 
@@ -54,7 +56,8 @@ namespace PestControl.Web.Pages.Identity
 
                
 
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                return RedirectToPage("./ForgotPasswordConfirmation",
+                            new { email = Input.Email, returnUrl = string.Empty });
             }
 
             return Page();

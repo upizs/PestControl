@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,6 @@ namespace PestControl.Web.Pages.Identity
     public partial class ResetPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-
         public ResetPasswordModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -36,7 +37,7 @@ namespace PestControl.Web.Pages.Identity
             {
                 Input = new ResetPasswordInputModel
                 {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+                    Code = HttpUtility.UrlDecode(code)
                 };
                 return Page();
             }
@@ -53,15 +54,13 @@ namespace PestControl.Web.Pages.Identity
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation",
-                            new { email = Input.Email, returnUrl = string.Empty });
+                return RedirectToPage("./ResetPasswordConfirmation");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation",
-                    new { email = Input.Email, returnUrl = string.Empty });
+                return RedirectToPage("./ResetPasswordConfirmation");
             }
 
             foreach (var error in result.Errors)
