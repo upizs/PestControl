@@ -20,8 +20,14 @@
     <tbody>
         @foreach (var comment in Model)
         {
-            <tr>
-                <td scope="row">@comment.Author.UserName</td>
+            <tr>@{ 
+                var userName = string.Empty;
+                if (comment.UserId == null)
+                    userName = "User Deleted";
+                else
+                    userName = comment.Author.UserName;
+            }
+                <td scope="row">@userName</td>
                 <td>@comment.Message</td>
                 <td>@comment.Date</td>
 

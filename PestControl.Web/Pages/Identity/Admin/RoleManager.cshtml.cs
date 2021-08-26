@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using PestControl.Data.Contracts;
 using PestControl.Data.Models;
 
 namespace PestControl.Web.Pages.Identity.Admin
@@ -16,12 +17,15 @@ namespace PestControl.Web.Pages.Identity.Admin
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserRepository _userRepository;
 
         public RoleManagerModel(UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUserRepository userRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _userRepository = userRepository;
         }
 
         public IEnumerable<ApplicationUser> Users { get; set; }
@@ -50,6 +54,21 @@ namespace PestControl.Web.Pages.Identity.Admin
             {
                await  _userManager.AddToRoleAsync(UserToChangeRole, role.Name);
             }
+
+            Users = await _userManager.Users.ToListAsync();
+            Roles = await _roleManager.Roles.ToListAsync();
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDelete(string userId)
+        {
+            UserToChangeRole = await _userManager.FindByIdAsync(userId);
+            
+            if (UserToChangeRole == null)
+                return RedirectToPage("/Identity/NotFound");
+
+            await _userRepository.DeleteUserAsync(UserToChangeRole.Id);
 
             Users = await _userManager.Users.ToListAsync();
             Roles = await _roleManager.Roles.ToListAsync();

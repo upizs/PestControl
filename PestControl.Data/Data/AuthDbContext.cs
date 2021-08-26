@@ -35,7 +35,10 @@ namespace PestControl.Data.Data
                                                .Ignore(c => c.TwoFactorEnabled);//and so on...
 
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");//to change the name of table.
-
+            //Defining relationship between these entities,
+            //Because when Adding a List in User model, I got an exception
+            modelBuilder.Entity<ApplicationUser>().HasMany( user => user.Tickets)
+                .WithOne(t =>t.AssignedUser).HasForeignKey(t => t.AssignedUserId);
         }
     }
 }

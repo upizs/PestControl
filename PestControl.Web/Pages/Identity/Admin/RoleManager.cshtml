@@ -16,8 +16,9 @@
         <tr>
             <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().UserName)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().Email)</th>
-            <th scope="col">Roles</th>
-            <th scope="col"></th>
+            <th scope="col">Role</th>
+            <th scope="col">Assign Role</th>
+            <th scope="col">Delete User</th>
         </tr>
 
     </thead>
@@ -25,40 +26,48 @@
         @foreach (var user in Model.Users)
         {
 
-            <tr>
-                <td scope="row">
-                    @user.UserName
-                </td>
-                <td>
-                    @user.Email
-                </td>
-                @{ 
-                    var roles = await UserManager.GetRolesAsync(user);
-                    var currentRole = roles.SingleOrDefault();
-                }
-                <td>
-                    @currentRole
-                </td>
-                <!--Roles-->
-                <td>
-                    <form method="post">
+        <tr>
+            <td scope="row">
+                @user.UserName
+            </td>
+            <td>
+                @user.Email
+            </td>
+            @{
+                var roles = await UserManager.GetRolesAsync(user);
+                var currentRole = roles.SingleOrDefault();
+            }
+            <td>
+                @currentRole
+            </td>
+            <!--Roles-->
+            <td>
+                <form method="post">
 
-                        <div class="form-group">
-                            <label asp-for="Roles"></label>
-                            <select class="form-control" asp-for="RoleToAssingId">
-                                @foreach (var role in Model.Roles)
-                                {
-                                    <option value="@role.Id">@role.Name</option>
-                                }
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Roles"></label>
+                        <select class="form-control" asp-for="RoleToAssingId">
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@role.Id">@role.Name</option>
+                            }
+                        </select>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary btn-sm">Assign</button>
-                        <input type="hidden" name="userId" value="@user.Id" />
-                    </form>
+                    <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                    <input type="hidden" name="userId" value="@user.Id" />
+                </form>
 
-                </td>
-            </tr>
+            </td>
+            <td>
+                <form method="post" asp-page-handler="delete">
+
+                    <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                    <input type="hidden" name="userId" value="@user.Id" />
+                </form>
+
+            </td>
+        </tr>
 
         }
     </tbody>

@@ -41,6 +41,7 @@ namespace PestControl.Web
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -87,7 +88,7 @@ namespace PestControl.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            SeedData.Seed(userManager, roleManager);
+            //SeedData.Seed(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>
             {

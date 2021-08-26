@@ -53,19 +53,22 @@ namespace PestControl.Web.Pages.Identity
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                return RedirectToPage("./ResetPasswordConfirmation",
+                            new { email = Input.Email, returnUrl = string.Empty });
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                return RedirectToPage("./ResetPasswordConfirmation",
+                    new { email = Input.Email, returnUrl = string.Empty });
             }
 
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+
             return Page();
         }
     }

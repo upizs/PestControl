@@ -97,6 +97,7 @@ namespace PestControl.Web.Pages.Tickets
             else
             {
                 Ticket.Status = Status.Done;
+                Ticket.DateUpdated = DateTimeOffset.Now;
                 await _ticketRepository.SaveAsync();
                
             }
@@ -124,6 +125,7 @@ namespace PestControl.Web.Pages.Tickets
             else
             {
                 Ticket.Status = Status.InProgress;
+                Ticket.DateUpdated = DateTimeOffset.Now;
                 await _ticketRepository.SaveAsync();
 
             }
