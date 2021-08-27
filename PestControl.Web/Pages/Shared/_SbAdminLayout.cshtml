@@ -69,15 +69,23 @@
                         <span>Projects</span>
                     </a>
                 </li>
+                <!-- Nav Item - My Tickets -->
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Tickets/MyTickets">
+                        <i class="fas fa-bug"></i>
+                        <span>My Tickets</span>
+                    </a>
+                </li>
                 <!-- Nav Item - Tickets -->
                 <li class="nav-item">
                     <a class="nav-link" asp-page="/Tickets/Index">
                         <i class="fas fa-bug"></i>
-                        <span>Tickets</span>
+                        <span>All Tickets</span>
                     </a>
                 </li>
                 @if (User.IsInRole("Admin"))
                 {
+                    <!-- Nav Item - Role Manager -->
 
                     <li class="nav-item">
                         <a class="nav-link" asp-page="/Identity/Admin/RoleManager">

@@ -57,7 +57,14 @@ namespace PestControl.Web.Pages.Tickets
                 TempData["Message"] = "Ticket created!";
             }
 
-            return RedirectToPage("./AssignUser", new { ticketId = NewTicket.Id });
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToPage("./AssignUser", new { ticketId = NewTicket.Id });
+            }
+
+            return RedirectToPage("./Details", new { ticketId = NewTicket.Id });
+
+
         }
 
         //Fills all the lists before the page loads

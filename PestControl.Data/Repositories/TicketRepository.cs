@@ -223,12 +223,32 @@ namespace PestControl.Data.Repositories
                 .OrderBy(t => t.DateCreated)
                 .ToListAsync();
         }
+        public async Task<ICollection<Ticket>> GetAllNotDoneTicketsForUser(string userId)
+        {
+            //Because != didnt work in Where, I have used < operator
+            return await _db.Tickets
+                .Where(t => (int)t.Status < (int)Status.Done 
+                                && t.AssignedUserId == userId)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
 
         public async Task<ICollection<Ticket>> GetAllNotDoneTickets(int projectId)
         {
             return await _db.Tickets
                 .Where(t => (int)t.Status < (int)Status.Done
-                && t.ProjectId == projectId)
+                                && t.ProjectId == projectId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByStatus(Status status, string userId)
+        {
+            return await _db.Tickets
+                .Where(t => t.Status == status && t.AssignedUserId == userId)
                 .Include(t => t.AssignedUser)
                 .Include(t => t.Project)
                 .OrderBy(t => t.DateCreated)

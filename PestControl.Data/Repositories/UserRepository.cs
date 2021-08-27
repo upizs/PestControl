@@ -25,6 +25,12 @@ namespace PestControl.Data.Repositories
                 .Include(u => u.Comments)
                 .Include(u=> u.Tickets)
                 .FirstOrDefaultAsync(u => u.Id == userId);
+            
+            foreach (var ticket in user.Tickets)
+            {
+                ticket.Status = Status.NotAssigned;
+            }
+
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded;
         }

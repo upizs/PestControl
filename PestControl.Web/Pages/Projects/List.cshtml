@@ -47,23 +47,33 @@
                     }
                 </td>
                 <td>
-                    <a class="btn btn-info btn-sm"
-                       asp-page="./AssignUsers"
-                       asp-route-projectId="@project.Id">Assign Users</a>
+
                     <a class="btn btn-info btn-sm"
                        asp-page="./Details"
                        asp-route-projectId="@project.Id">Details</a>
-                    <a class="btn btn-info btn-sm"
-                       asp-page="./Edit"
-                       asp-route-projectId="@project.Id">Edit</a>
-                    <a class="btn btn-danger btn-sm"
-                       asp-page="./Delete"
-                       asp-route-projectId="@project.Id">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <a class="btn btn-info btn-sm"
+                           asp-page="./AssignUsers"
+                           asp-route-projectId="@project.Id">Assign Users</a>
+                        <a class="btn btn-info btn-sm"
+                           asp-page="./Edit"
+                           asp-route-projectId="@project.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm"
+                           asp-page="./Delete"
+                           asp-route-projectId="@project.Id">Delete</a>
+                    }
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a class="btn btn-primary"
-   asp-page="./Create">Add Project</a>
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary"
+       asp-page="./Create">Add New Project</a>
+}
+

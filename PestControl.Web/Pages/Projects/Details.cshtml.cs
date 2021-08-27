@@ -84,7 +84,9 @@ namespace PestControl.Web.Pages.Projects
             //Needed to clean the bound property so that the comment form is empthy
             Comment = new Comment();
             ModelState.Clear();
-            return Page();
+            //I redirect to the same page using this method, to change the url
+            //Had an issue with handler and when refreshing the same comment was posted again.
+            return RedirectToPage("./Details", new { projectId = projectId });
         }
     }
 }

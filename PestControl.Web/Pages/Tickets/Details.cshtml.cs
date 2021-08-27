@@ -77,7 +77,9 @@ namespace PestControl.Web.Pages.Tickets
             Comment = new Comment();
             ModelState.Clear();
 
-            return Page();
+            //I redirect to the same page using this method, to change the url
+            //Had an issue with handler and when refreshing the same comment was posted again.
+            return RedirectToPage("./Details", new { ticketId = ticketId });
         }
 
         public async Task<IActionResult> OnPostDone(int ticketId)
@@ -118,7 +120,7 @@ namespace PestControl.Web.Pages.Tickets
 
             if (!_signInManager.IsSignedIn(User))
             {
-                ModelState.AddModelError("", "You need to be signed in to make a comment.");
+                ModelState.AddModelError("", "You need to be signed in to edit this ticket");
             }
             else if (user.Id != Ticket.AssignedUserId)
                 ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
@@ -133,6 +135,31 @@ namespace PestControl.Web.Pages.Tickets
             Comments = await _commentRepository.GetCommentsByTicket(ticketId);
 
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostClose(int ticketId)
+        {
+            Ticket = await _ticketRepository.FindByIdAsync(ticketId);
+
+            if (Ticket == null)
+                RedirectToPage("./NotFound");
+
+            if (!_signInManager.IsSignedIn(User))
+            {
+                ModelState.AddModelError("", "You need to be signed in to edit this ticket");
+            }
+            else if (!User.IsInRole("Admin"))
+                ModelState.AddModelError("", "You dont have the authorization to close this ticket.");
+            else
+            {
+                Ticket.Status = Status.Closed;
+                Ticket.DateUpdated = DateTimeOffset.Now;
+                await _ticketRepository.SaveAsync();
+
+            }
+
+            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
             return Page();
         }
     }

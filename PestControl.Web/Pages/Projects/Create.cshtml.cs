@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using PestControl.Data.Models;
 
 namespace PestControl.Web.Pages.Projects
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly IProjectRepository _projectRepository;
@@ -38,18 +40,20 @@ namespace PestControl.Web.Pages.Projects
             {
                 return Page();
             }
-            else
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
             {
-                //Later on allow only logedin and in role users to create projects
-                if (_signInManager.IsSignedIn(User))
-                {
-                    var user = await _userManager.GetUserAsync(User);
-                    NewProject.CreatedById = user.Id;
-                }
-                NewProject.DateCreated = DateTimeOffset.Now;
-                await _projectRepository.CreateAsync(NewProject);
+                return RedirectToPage("/Error");
             }
 
+            //Admin gets automatically asigned
+            NewProject.ApplicationUsers.Add(user);
+            NewProject.CreatedById = user.Id;
+            NewProject.DateCreated = DateTimeOffset.Now;
+
+            await _projectRepository.CreateAsync(NewProject);
+            
             return RedirectToPage("./AssignUsers", new {projectId = NewProject.Id });
         }
     }

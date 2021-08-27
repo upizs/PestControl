@@ -30,13 +30,20 @@ namespace PestControl.Web.Pages.Comments
             returnUrl = returnUrl ?? Url.Content("/Index");
 
             var user = await _userManager.GetUserAsync(User);
-            //Prevets users other than comment author accesing this page
-            //Also if the user is not signed in
-            if (user == null || Comment.UserId != user.Id || Comment == null)
+            
+            if (user == null || Comment == null)
                 return RedirectToPage("./NotFound", returnUrl);
+            //Either Admin or Author can access the page
+            else if (User.IsInRole("Admin") || user.Id == Comment.UserId)
+            {
+                ReturnUrl = returnUrl;
+                return Page();
+            }
 
-            ReturnUrl = returnUrl;
-            return Page();
+            //if we get here, then not authorized
+            return RedirectToPage("./NotFound", returnUrl);
+
+
         }
 
         public async Task<IActionResult> OnPost(string returnUrl)

@@ -30,6 +30,8 @@
 <!--Also a button for edit and all tickets for this project-->
 @if (SignInManager.IsSignedIn(User))
 {
+    <!--Comment section-->
+
     <form method="post" asp-page-handler="comment">
         <input type="hidden" asp-for="Ticket.Id" />
 
@@ -44,8 +46,10 @@
     </form>
 }
 @if (UserManager.GetUserId(User) == Model.Ticket.AssignedUserId
-   && Model.Ticket.Status == Status.Assigned)
+&& Model.Ticket.Status == Status.Assigned)
 {
+    <!--Start working on ticket button-->
+
     <form method="post" asp-page-handler="inprogress">
         <input type="hidden" asp-for="Ticket.Id" />
         <button type="submit" class="btn btn-info btn-icon-split ">
@@ -56,8 +60,10 @@
 
 }
 @if (UserManager.GetUserId(User) == Model.Ticket.AssignedUserId
- && Model.Ticket.Status == Status.InProgress)
+&& Model.Ticket.Status == Status.InProgress)
 {
+    <!--Ticket done button-->
+
     <form method="post" asp-page-handler="done">
         <input type="hidden" asp-for="Ticket.Id" />
         <button type="submit" class="btn btn-success btn-icon-split ">
@@ -66,15 +72,31 @@
         </button>
     </form>
 }
+@if (User.IsInRole("Admin"))
+{
+    <!--Assign users to ticket button-->
 
+    <a class="btn btn-info"
+       asp-page="/Tickets/AssignUser"
+       asp-route-ticketId="@Model.Ticket.Id">Assign User</a>
+    <!--Edit ticket button-->
 
+    <a asp-page="/Tickets/Edit"
+       asp-route-ticketId="@Model.Ticket.Id"
+       class="btn btn-primary">Edit</a>
+    if (Model.Ticket.Status == Status.Done)
+    {
+        <!--Close ticket button-->
+        <form method="post" asp-page-handler="close">
+            <input type="hidden" asp-for="Ticket.Id" />
+            <button type="submit" class="btn btn-success btn-icon-split ">
+                <span class="icon text-white"><i class="fas fa-check"></i></span>
+                <span class="text">Done!</span>
+            </button>
+        </form>
+    }
 
-<a class="btn btn-info"
-   asp-page="/Tickets/AssignUser"
-   asp-route-ticketId="@Model.Ticket.Id">Assign User</a>
-<a asp-page="/Tickets/Edit"
-   asp-route-ticketId="@Model.Ticket.Id"
-   class="btn btn-primary">Edit</a>
+}
 
 <a asp-page="/Tickets/Index"
    class="btn btn-primary">All Tickets</a>

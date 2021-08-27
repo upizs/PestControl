@@ -1,0 +1,49 @@
+﻿@page
+@model PestControl.Web.Pages.Tickets.MyTicketsModel
+@{
+    ViewData["Title"] = "My Tickets";
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <!--Show all Closed tickets button-->
+    <form method="post" asp-page-handler="closed">
+        <button type="submit" class="btn btn-success btn-icon-split ">
+            <span class="icon text-white"><i class="fas fa-check-circle"></i></span>
+            <span class="text">Show closed tickets</span>
+        </button>
+    </form>
+}
+else
+{
+
+    <!--Show all Not done tickets button-->
+    <form method="post" asp-page-handler="notdone">
+        <button type="submit" class="btn btn-warning btn-icon-split ">
+            <span class="icon text-white">
+                <i class="fas fa-exclamation"></i>
+                <span class="text">Show all not done tickets</span>
+        </button>
+    </form>
+
+    <!--Show all Done tickets button-->
+    <form method="post" asp-page-handler="done">
+        <button type="submit" class="btn btn-success btn-icon-split ">
+            <span class="icon text-white"><i class="fas fa-check"></i></span>
+            <span class="text">Show done tickets</span>
+        </button>
+    </form>
+}
+
+<!--All my tickets button-->
+<a asp-page="/Tickets/MyTickets"
+   class="btn btn-primary btn-icon-split">
+    <span class="icon text-white"><i class="fas fa-list-ul"></i></span>
+    <span class="text">All my tickets</span>
+</a>
+
+<!--Ticket table-->
+@if (Model.Tickets.Any())
+{
+    <partial name="_TicketTable" model="@Model.Tickets" />
+}

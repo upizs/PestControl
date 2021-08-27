@@ -46,18 +46,32 @@
                 <td> @ticket.DateCreated.Date</td>
 
                 <td>
-                    <a class="btn btn-info btn-sm"
-                       asp-page="/Tickets/AssignUser"
-                       asp-route-ticketId="@ticket.Id">Assign User</a>
+
                     <a class="btn btn-info btn-sm"
                        asp-page="/Tickets/Details"
                        asp-route-ticketId="@ticket.Id">Details</a>
-                    <a class="btn btn-info btn-sm"
-                       asp-page="/Tickets/Edit"
-                       asp-route-ticketId="@ticket.Id">Edit</a>
-                    <a class="btn btn-danger btn-sm"
-                       asp-page="/Tickets/Delete"
-                       asp-route-ticketId="@ticket.Id">Delete</a>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-info btn-sm"
+                           asp-page="/Tickets/Edit"
+                           asp-route-ticketId="@ticket.Id">Edit</a>
+                           @if (ticket.AssignedUserId == null)
+                           {
+                            <a class="btn btn-info btn-sm"
+                               asp-page="/Tickets/AssignUser"
+                               asp-route-ticketId="@ticket.Id">Assign User</a>
+
+                           }
+
+
+
+
+                        <a class="btn btn-danger btn-sm"
+                           asp-page="/Tickets/Delete"
+                           asp-route-ticketId="@ticket.Id">Delete</a>
+                    }
+
 
                 </td>
             </tr>

@@ -35,18 +35,24 @@
                 <td>
                     <!--If user is the same that wrote the comment can edit or remove it-->
                     <!--Must also give this authority to Admin(Only to remove)-->
-                    @if (SignInManager.IsSignedIn(User)
-                       && UserManager.GetUserId(User) == comment.UserId)
+                    @if (UserManager.GetUserId(User) == comment.UserId)
                     {
                         <a class="btn btn-info btn-sm"
                            asp-page="/Comments/Edit"
                            asp-route-commentId="@comment.Id"
                            asp-route-returnUrl="@Context.Request.Path">Edit</a>
+                    }
+                    @if (UserManager.GetUserId(User) == comment.UserId
+                       || User.IsInRole("Admin"))
+                    {
+
+
                         <a class="btn btn-danger btn-sm"
                            asp-page="/Comments/Delete"
                            asp-route-commentId="@comment.Id"
                            asp-route-returnUrl="@Context.Request.Path">Delete</a>
                     }
+
                 </td>
             </tr>
         }

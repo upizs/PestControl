@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,7 +12,8 @@ using PestControl.Data.Models;
 
 namespace PestControl.Web.Pages.Tickets
 {
-        public class AssignUserModel : PageModel
+    [Authorize(Roles ="Admin")]
+    public class AssignUserModel : PageModel
         {
             private readonly ITicketRepository _ticketRepository;
             private readonly UserManager<ApplicationUser> _userManager;

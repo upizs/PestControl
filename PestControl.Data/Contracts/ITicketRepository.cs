@@ -35,9 +35,21 @@ namespace PestControl.Data.Contracts
         /// <param name="projectId">Project id</param>
         /// <returns>Collection of tickets</returns>
         Task<ICollection<Ticket>> GetAllNotDoneTickets(int projectId);
-
+        Task<ICollection<Ticket>> GetAllNotDoneTicketsForUser(string userId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns>IEnumerable of tickets</returns>
         Task<ICollection<Ticket>> GetTicketsByStatus(Status status);
         Task<ICollection<Ticket>> GetTicketsByStatus(Status status, int projectId);
+        /// <summary>
+        /// Gets tickets by status and UserId
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<ICollection<Ticket>> GetTicketsByStatus(Status status, string userId);
         //Return all the tickets by user(create an overload with project)
         Task<ICollection<Ticket>> GetTicketsByUser(string userId);
         Task<ICollection<Ticket>> GetTicketsByUser(string userId, int projectId);
