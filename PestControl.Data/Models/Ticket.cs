@@ -10,9 +10,15 @@ namespace PestControl.Data.Models
 {
     public enum Priority
     {
+        //I put display names on so I can
+        //later get a list of strings
+        [Display(Name = "Low")]
         Low,
+        [Display(Name = "Medium")]
         Medium,
+        [Display(Name = "High")]
         High,
+        [Display(Name = "Highest")]
         Highest
     }
 

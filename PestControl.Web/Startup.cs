@@ -35,14 +35,16 @@ namespace PestControl.Web
             services.AddDbContext<AuthDbContext>(options => 
             options.UseSqlServer(connectionsString));
 
-            //Authority and Identity
+            //Identity
             services.AddScoped<SignInManager<ApplicationUser>>();
             services.AddScoped<UserManager<ApplicationUser>>();
+            //Dependencies
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
+            //Identity settings
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 //set up easy password rules for easier developing life
@@ -57,7 +59,18 @@ namespace PestControl.Web
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
-            services.AddRazorPages();
+            //Cookie settings
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Login";
+                options.AccessDeniedPath = "/Identity/AccessDenied";
+            });
+
+            services.AddRazorPages(options => {
+                options.Conventions.AuthorizeFolder("/Projects");
+                options.Conventions.AuthorizeFolder("/Tickets");
+                options.Conventions.AuthorizePage("/Index");
+            });
         }
 
         

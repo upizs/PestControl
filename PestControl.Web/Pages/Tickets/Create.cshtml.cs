@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,15 +16,18 @@ namespace PestControl.Web.Pages.Tickets
         
         private readonly ITicketRepository _ticketRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHtmlHelper _htmlHelper;
 
         public CreateModel(ITicketRepository ticketRepository, 
             IProjectRepository projectRepository,
+            UserManager<ApplicationUser> userManager,
             IHtmlHelper htmlHelper)
         {
             
             _ticketRepository = ticketRepository;
             _projectRepository = projectRepository;
+            _userManager = userManager;
             _htmlHelper = htmlHelper;
         }
 
@@ -40,6 +44,7 @@ namespace PestControl.Web.Pages.Tickets
 
         public async Task<IActionResult> OnPost()
         {
+            var user = await _userManager.GetUserAsync(User);
             if (NewTicket == null)
                 RedirectToPage("./NotFound");
             if (!ModelState.IsValid)
@@ -52,7 +57,7 @@ namespace PestControl.Web.Pages.Tickets
                 NewTicket.DateCreated = DateTimeOffset.Now;
                 NewTicket.DateUpdated = NewTicket.DateCreated;
                 NewTicket.Status = Status.NotAssigned;
-                //This is where I add user who created the ticket when Identity is fully working
+                NewTicket.SubmittedUserId = user.Id;
                 await _ticketRepository.CreateAsync(NewTicket);
                 TempData["Message"] = "Ticket created!";
             }
@@ -72,7 +77,8 @@ namespace PestControl.Web.Pages.Tickets
         //need to reload the page I also need to reload the lists. 
         public async Task GetAllListsReady()
         {
-            Projects = await _projectRepository.GetAllAsync();
+            var user = await _userManager.GetUserAsync(User);
+            Projects = await _projectRepository.GetProjectsByUser(user);
             Types = _htmlHelper.GetEnumSelectList<Types>();
             Priorities = _htmlHelper.GetEnumSelectList<Priority>();
         }

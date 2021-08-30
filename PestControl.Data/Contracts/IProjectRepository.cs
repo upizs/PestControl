@@ -12,6 +12,7 @@ namespace PestControl.Data.Contracts
         Task<ICollection<Project>> Search(string searchKey);
         Task<bool> AssignUser(ApplicationUser user, int projectId);
         Task<bool> RemoveUser(ApplicationUser user, int projectId);
+        Task<ICollection<Project>> GetProjectsByUser(ApplicationUser user);
 
     }
 }

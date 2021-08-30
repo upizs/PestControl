@@ -9,6 +9,12 @@
     ViewData["Title"] = "Ticket Details";
 }
 
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">
+        @Model.Message
+    </div>
+}
 
 <h2>@Model.Ticket.Title</h2>
 
@@ -100,6 +106,9 @@
 
 <a asp-page="/Tickets/Index"
    class="btn btn-primary">All Tickets</a>
+
+<a asp-page="/Tickets/MyTickets"
+   class="btn btn-primary">My Tickets</a>
 
 
 

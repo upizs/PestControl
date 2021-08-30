@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PestControl.Data.Contracts;
@@ -12,10 +13,16 @@ namespace PestControl.Web.Pages.Tickets
     public class IndexModel : PageModel
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IProjectRepository _projectRepository;
 
-        public IndexModel(ITicketRepository ticketRepository)
+        public IndexModel(ITicketRepository ticketRepository,
+            UserManager<ApplicationUser> userManager,
+            IProjectRepository projectRepository)
         {
             _ticketRepository = ticketRepository;
+            _userManager = userManager;
+            _projectRepository = projectRepository;
         }
         
         public IEnumerable<Ticket> Tickets { get; set; }
@@ -23,18 +30,24 @@ namespace PestControl.Web.Pages.Tickets
         public string Message { get; set; }
         public async Task OnGet()
         {
-            Tickets = await _ticketRepository.GetAllAsync();
+            var user = await _userManager.GetUserAsync(User);
+            var projects = await _projectRepository.GetProjectsByUser(user);
+            Tickets =  _ticketRepository.GetAllTicketsForProjects(projects);
         }
 
         public async Task<IActionResult> OnPostNotDone()
         {
-            Tickets = await _ticketRepository.GetAllNotDoneTickets();
+            var user = await _userManager.GetUserAsync(User);
+            var projects = await _projectRepository.GetProjectsByUser(user);
+            Tickets =  _ticketRepository.GetAllNotDoneTicketsFromProjects(projects);
             return Page();
         }
 
         public async Task<IActionResult> OnPostDone()
         {
-            Tickets = await _ticketRepository.GetTicketsByStatus(Status.Done);
+            var user = await _userManager.GetUserAsync(User);
+            var projects = await _projectRepository.GetProjectsByUser(user);
+            Tickets = _ticketRepository.GetTicketsByStatusFromProjects(Status.Done, projects);
             return Page();
         }
     }

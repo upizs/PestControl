@@ -110,6 +110,17 @@ namespace PestControl.Data.Repositories
             project.ApplicationUsers.Remove(user);
             return await SaveAsync();
         }
+
+        public async Task<ICollection<Project>> GetProjectsByUser(ApplicationUser user)
+        {
+            return await _db.Projects
+                .Where(p => p.ApplicationUsers.Contains(user))
+                .Include(p => p.Comments)
+                .Include(p=> p.Tickets)
+                .Include(p => p.ApplicationUsers)
+                .OrderBy(p => p.DateCreated)
+                .ToListAsync();
+        }
     }
 
 }

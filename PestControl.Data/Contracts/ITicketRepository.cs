@@ -17,9 +17,11 @@ namespace PestControl.Data.Contracts
         Task<int> CountTicketsForProject(int projectId);
         //Return all the tickets for requested project
         Task<ICollection<Ticket>> GetAllTicketsForProject(int projectId);
+        ICollection<Ticket> GetAllTicketsForProjects(IEnumerable<Project> projects);
         //Return all the tickets by priority (create an overload with project)
         Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority);
         Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, int projectId);
+        Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, string userId);
 
         //Return all the tickets by status(create an overload with project)
         /// <summary>
@@ -36,6 +38,7 @@ namespace PestControl.Data.Contracts
         /// <returns>Collection of tickets</returns>
         Task<ICollection<Ticket>> GetAllNotDoneTickets(int projectId);
         Task<ICollection<Ticket>> GetAllNotDoneTicketsForUser(string userId);
+        ICollection<Ticket> GetAllNotDoneTicketsFromProjects(IEnumerable<Project> projects);
         /// <summary>
         /// 
         /// </summary>
@@ -50,6 +53,7 @@ namespace PestControl.Data.Contracts
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<ICollection<Ticket>> GetTicketsByStatus(Status status, string userId);
+        ICollection<Ticket> GetTicketsByStatusFromProjects(Status status, IEnumerable<Project> projects);
         //Return all the tickets by user(create an overload with project)
         Task<ICollection<Ticket>> GetTicketsByUser(string userId);
         Task<ICollection<Ticket>> GetTicketsByUser(string userId, int projectId);

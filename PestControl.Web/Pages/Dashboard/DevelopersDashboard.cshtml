@@ -1,0 +1,259 @@
+﻿@page
+@model PestControl.Web.Pages.Dashboard.DevelopersDashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+
+}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <a asp-page="/Tickets/Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-download fa-sm text-white-50"></i> Add Ticket
+    </a>
+</div>
+
+<!--Developer assigned ticket summaries-->
+<div class="row">
+    <!--Assigned ticket count with a link to MyTickets-->
+    <div class="col-xl-3 col-md-6 mb-4 pl-0">
+        <a class="stretched-link text-decoration-none" asp-page="/Tickets/MyTickets">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-m font-weight-bold text-warning text-uppercase mb-1">
+                                Assigned Tickets
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AssignedTicketCount</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-file-contract fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!--High priority ticket count with a link to MyTickets-->
+    <div class="col-xl-3 col-md-6 mb-4 pl-0">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-m font-weight-bold text-danger text-uppercase mb-1">
+                            High Priority
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.HighPriorityTicketCount</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-fire-alt fa-3x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Done tickets Count with a link to Mytickets with handler=done-->
+    <div class="col-xl-3 col-md-6 mb-4 pl-0 ">
+        <a class="stretched-link text-decoration-none" asp-page="/Tickets/MyTickets" asp-page-handler="done">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-m font-weight-bold text-info text-uppercase mb-1">
+                                Done Tickets
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DoneTicketCount</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!--Toltal ssigned tickets vs Done %-->
+    <div class="col-xl-3 col-md-6 mb-4 ">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-4">
+                        <div class="text-m font-weight-bold text-success text-uppercase mb-1">
+                            Percentage Done <span class="float-right">@Model.DonePercentage%</span>
+                        </div>
+                        <div class="progress mb-0 mt-4">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: @Model.DonePercentage%"
+                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-percentage fa-3x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- My Projects Row -->
+<div class="row pl-2 pr-3">
+
+    <!-- Project Card  -->
+    <div class="card border-left-dark shadow col-lg-12 mb-6 pl-0 pr-0">
+        <div class="card-header  py-3">
+            <h5 class="m-0 font-weight-bold text-primary">
+                My Projects
+                    
+            </h5>
+            
+             
+            
+        </div>
+        <div class="card-body">
+            <div class="float-right">
+                <span class="text-small badge badge-dark">Closed</span>
+                <span class="badge badge-success">Done</span>
+                <span class="badge badge-primary">In Progress</span>
+                <span class="badge badge-warning">Assigned</span>
+                <span class="badge badge-light">Not Assigned</span>
+            </div>
+            <!--Projects-->
+            @foreach (var project in Model.ProjectsAndTheirTicketsByStatus)
+            {
+                <div class="text-lg font-weight-bold">
+                    @project.Key
+                </div>
+                //reusable variable
+                decimal percent;
+                //Progress by ticket status
+                <div class="progress mb-4">
+                    @if (project.Value.TryGetValue(Data.Models.Status.Closed, out percent))
+                    {
+                        <div class="progress-bar bg-dark" role="progressbar" style="width: @percent%"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    }
+                    @if (project.Value.TryGetValue(Data.Models.Status.Done, out percent))
+                    {
+                        <div class="progress-bar bg-success" role="progressbar" style="width: @percent%"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    }
+                    @if (project.Value.TryGetValue(Data.Models.Status.InProgress, out percent))
+                    {
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: @percent%"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    }
+
+                    @if (project.Value.TryGetValue(Data.Models.Status.Assigned, out percent))
+                    {
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: @percent%"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    }
+
+                    @if (project.Value.TryGetValue(Data.Models.Status.NotAssigned, out percent))
+                    {
+                        <div class="progress-bar bg-light" role="progressbar" style="width: @percent%"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--Priority chart and News-->
+<div class="row pt-4">
+
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card border-left-danger shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">My Tickets By Priority</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-bar">
+                    <canvas id="priorityChart"></canvas>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card border-left-info shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">News</h6>
+            </div>
+            <div class="card-body">
+                <p>
+                    Here will be notifications that user should be concerned about.
+                </p>
+                <p class="mb-0">
+                    Before working with this theme, you should become familiar with the
+                    Bootstrap framework, especially the utility classes.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            var priorityChartCanvas = $('#priorityChart').get(0).getContext('2d')
+            var labels = @JavaScriptConverter.SerializeObject(Model.Priorities.ToArray());
+            var data = @JavaScriptConverter.SerializeObject(Model.PriorityCounts.ToArray());
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            }
+
+            var priorityChart = new Chart(priorityChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ["Tickets"],
+                    datasets: [{
+                        //Low priority
+                        label: labels[0],
+                        backgroundColor: "#f0f567",
+                        borderColor: "#f0f567",
+                        data: [data[1]]
+
+                    },
+                    {
+                        //Medium priority
+                        label: labels[1],
+                        backgroundColor: "#ffc107",
+                        borderColor: "#ffc107",
+                        data: [data[1]]
+
+                    },
+                        {//High priority
+                        label: labels[2],
+                        backgroundColor: "#df4759",
+                        borderColor: "#df4759",
+                        data: [data[2]]
+
+                    },
+                    {
+                        //Highest priority
+                        label: labels[3],
+                        backgroundColor: "#a10000",
+                        hoverBackgroundColor: "#2e59d9",
+                        borderColor: "#a10000",
+                        data: [data[3]]
+
+                    }]
+                },
+                options: barChartOptions
+            });
+
+            
+
+
+        })
+
+    </script>
+
+ }

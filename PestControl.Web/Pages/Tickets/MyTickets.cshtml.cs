@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using PestControl.Data.Models;
 
 namespace PestControl.Web.Pages.Tickets
 {
+    [Authorize]
     public class MyTicketsModel : PageModel
     {
         private readonly ITicketRepository _ticketRepository;
@@ -34,7 +36,12 @@ namespace PestControl.Web.Pages.Tickets
 
             //Admin has to check and close all the done tickets
             if (User.IsInRole("Admin"))
+            {
                 Tickets = await _ticketRepository.GetTicketsByStatus(Status.Done);
+                var notAssignedTickets = await _ticketRepository.GetTicketsByStatus(Status.NotAssigned);
+                Tickets = Tickets.Concat(notAssignedTickets);
+
+            }
             else
                 Tickets = await _ticketRepository.GetTicketsByUser(PageUser.Id);
 
@@ -66,6 +73,15 @@ namespace PestControl.Web.Pages.Tickets
             if (PageUser == null)
                 return RedirectToPage("/Identity/Login");
             Tickets = await _ticketRepository.GetTicketsByStatus(Status.Closed);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostNotAssigned()
+        {
+            PageUser = await _userManager.GetUserAsync(User);
+            if (PageUser == null)
+                return RedirectToPage("/Identity/Login");
+            Tickets = await _ticketRepository.GetTicketsByStatus(Status.NotAssigned);
             return Page();
         }
         

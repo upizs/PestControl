@@ -254,5 +254,51 @@ namespace PestControl.Data.Repositories
                 .OrderBy(t => t.DateCreated)
                 .ToListAsync();
         }
+
+        public ICollection<Ticket> GetAllTicketsForProjects(IEnumerable<Project> projects)
+        {
+            List<Ticket> allTickets = new();
+            foreach (var project in projects)
+            {
+                var projectTickets = project.Tickets;
+                allTickets = allTickets.Concat(projectTickets).ToList();
+            }
+
+            return allTickets;
+        }
+
+        public ICollection<Ticket> GetTicketsByStatusFromProjects(Status status, IEnumerable<Project> projects)
+        {
+            List<Ticket> allTickets = new();
+            foreach (var project in projects)
+            {
+                var projectTickets = project.Tickets.Where(t => t.Status == status);
+                allTickets = allTickets.Concat(projectTickets).ToList();
+            }
+
+            return allTickets;
+        }
+
+        public ICollection<Ticket> GetAllNotDoneTicketsFromProjects(IEnumerable<Project> projects)
+        {
+            List<Ticket> allTickets = new();
+            foreach (var project in projects)
+            {
+                var projectTickets = project.Tickets.Where(t => t.Status < Status.Done);
+                allTickets = allTickets.Concat(projectTickets).ToList();
+            }
+
+            return allTickets;
+        }
+
+        public async Task<ICollection<Ticket>> GetTicketsByPriority(Priority priority, string userId)
+        {
+            return await _db.Tickets
+                .Where(t => t.Priority == priority && t.AssignedUserId == userId)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
     }
 }
