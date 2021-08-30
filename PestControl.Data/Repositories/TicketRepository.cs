@@ -300,5 +300,26 @@ namespace PestControl.Data.Repositories
                 .OrderBy(t => t.DateCreated)
                 .ToListAsync();
         }
+
+        public async Task<ICollection<Ticket>> GetAllHighPriorityTickets()
+        {
+            return await _db.Tickets
+                .Where(t => t.Priority > Priority.Medium && t.Status < Status.Done)
+                .Include(t => t.AssignedUser)
+                .Include(t => t.Project)
+                .OrderBy(t => t.DateCreated)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Ticket>> GetAllHighPriorityTickets(string userId)
+        {
+            return await _db.Tickets
+                 .Where(t => t.Priority > Priority.Medium 
+                 && t.AssignedUserId == userId && t.Status < Status.Done)
+                 .Include(t => t.AssignedUser)
+                 .Include(t => t.Project)
+                 .OrderBy(t => t.DateCreated)
+                 .ToListAsync();
+        }
     }
 }

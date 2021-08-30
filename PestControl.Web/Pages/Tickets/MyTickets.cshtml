@@ -10,14 +10,14 @@
     <form method="post" asp-page-handler="closed">
         <button type="submit" class="btn btn-success btn-icon-split ">
             <span class="icon text-white"><i class="fas fa-check-circle"></i></span>
-            <span class="text">Show closed tickets</span>
+            <span class="text">Closed tickets</span>
         </button>
     </form>
     <!--Show all Not Assigned tickets button-->
     <form method="post" asp-page-handler="notassigned">
         <button type="submit" class="btn btn-warning btn-icon-split ">
             <span class="icon text-white"><i class="far fa-clipboard"></i></span>
-            <span class="text">Show Not Assigned tickets</span>
+            <span class="text">Not Assigned tickets</span>
         </button>
     </form>
 }
@@ -28,8 +28,9 @@ else
     <form method="post" asp-page-handler="notdone">
         <button type="submit" class="btn btn-warning btn-icon-split ">
             <span class="icon text-white">
-                <i class="fas fa-exclamation"></i></span>
-                <span class="text">Show all not done tickets</span>
+                <i class="fas fa-exclamation"></i>
+            </span>
+            <span class="text">All not done tickets</span>
         </button>
     </form>
 
@@ -37,11 +38,17 @@ else
     <form method="post" asp-page-handler="done">
         <button type="submit" class="btn btn-success btn-icon-split ">
             <span class="icon text-white"><i class="fas fa-check"></i></span>
-            <span class="text">Show done tickets</span>
+            <span class="text">Done tickets</span>
         </button>
     </form>
 }
-
+<!--Show all High priority tickets button-->
+<form method="post" asp-page-handler="priority">
+    <button type="submit" class="btn btn-danger btn-icon-split ">
+        <span class="icon text-white"><i class="fas fa-fire-alt"></i></span>
+        <span class="text">High Priority Tickets</span>
+    </button>
+</form>
 <!--All my tickets button-->
 <a asp-page="/Tickets/MyTickets"
    class="btn btn-primary btn-icon-split">

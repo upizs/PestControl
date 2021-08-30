@@ -84,7 +84,19 @@ namespace PestControl.Web.Pages.Tickets
             Tickets = await _ticketRepository.GetTicketsByStatus(Status.NotAssigned);
             return Page();
         }
-        
+
+        public async Task<IActionResult> OnPostPriority()
+        {
+            PageUser = await _userManager.GetUserAsync(User);
+            if (PageUser == null)
+                return RedirectToPage("/Identity/Login");
+            //If admin then get all high tickets
+            if(User.IsInRole("Admin"))
+                Tickets = await _ticketRepository.GetAllHighPriorityTickets();
+            //If developer then only ones assigned to user
+            Tickets = await _ticketRepository.GetAllHighPriorityTickets( PageUser.Id);
+            return Page();
+        }
 
     }
 }

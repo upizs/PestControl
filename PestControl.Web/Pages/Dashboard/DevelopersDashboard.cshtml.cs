@@ -50,10 +50,8 @@ namespace PestControl.Web.Pages.Dashboard
 
             DoneTicketCount = doneTickets.Count();
 
-            var highTickets = await _ticketRepository.GetTicketsByPriority(Priority.High);
-            var highestTickets = await _ticketRepository.GetTicketsByPriority(Priority.Highest);
+            var highTickets = await _ticketRepository.GetAllHighPriorityTickets(user.Id);
             HighPriorityTicketCount = highTickets.Count();
-            HighPriorityTicketCount = HighPriorityTicketCount + highestTickets.Count();
 
             DonePercentage = ((decimal)DoneTicketCount / AssignedTicketCount) * 100;
             DonePercentage = Math.Round(DonePercentage, 2);
