@@ -21,7 +21,11 @@
         <input asp-for="Project.Description" class="form-control" />
         @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
     </div>
-    
+
     <button type="submit" class="btn btn-primary">Save</button>
 
 </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

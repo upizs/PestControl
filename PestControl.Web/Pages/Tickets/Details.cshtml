@@ -84,7 +84,7 @@
 
     <a class="btn btn-info"
        asp-page="/Tickets/AssignUser"
-       asp-route-ticketId="@Model.Ticket.Id">Assign User</a>
+       asp-route-ticketId="@Model.Ticket.Id">Manage User</a>
     <!--Edit ticket button-->
 
     <a asp-page="/Tickets/Edit"
@@ -97,7 +97,7 @@
             <input type="hidden" asp-for="Ticket.Id" />
             <button type="submit" class="btn btn-success btn-icon-split ">
                 <span class="icon text-white"><i class="fas fa-check"></i></span>
-                <span class="text">Done!</span>
+                <span class="text">Close!</span>
             </button>
         </form>
     }

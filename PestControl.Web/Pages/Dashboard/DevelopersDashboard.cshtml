@@ -14,61 +14,82 @@
 </div>
 
 <!--Developer assigned ticket summaries-->
+<!--Or Ticket summary for Admin-->
 <div class="row">
-    <!--Assigned ticket count with a link to MyTickets-->
+    <!--Assigned ticket count -->
+    <!--Admin - Not Assigned ticket count -->
     <div class="col-xl-3 col-md-6 mb-4 pl-0">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-m font-weight-bold text-warning text-uppercase mb-1">
-                                Assigned Tickets
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AssignedTicketCount</div>
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-m font-weight-bold text-warning text-uppercase mb-1">
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                @:Tickets Not Assigned
+                            }
+                            else
+                            {
+                                @:Assigned Tickets
+                            }
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-file-contract fa-3x text-gray-300"></i>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                @Model.NotAssignedTicketCount
+                            }
+                            else
+                            {
+                                @Model.AssignedTicketCount
+
+                            }
                         </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-file-contract fa-3x text-gray-300"></i>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
     <!--High priority ticket count with a link to MyTickets-->
     <div class="col-xl-3 col-md-6 mb-4 pl-0">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-m font-weight-bold text-danger text-uppercase mb-1">
-                                High Priority
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.HighPriorityTicketCount</div>
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-m font-weight-bold text-danger text-uppercase mb-1">
+                            High Priority
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-fire-alt fa-3x text-gray-300"></i>
-                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.HighPriorityTicketCount</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-fire-alt fa-3x text-gray-300"></i>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
     <!--Done tickets Count with a link to Mytickets with handler=done-->
     <div class="col-xl-3 col-md-6 mb-4 pl-0 ">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-m font-weight-bold text-info text-uppercase mb-1">
-                                Done Tickets
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DoneTicketCount</div>
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-m font-weight-bold text-info text-uppercase mb-1">
+                            Done Tickets
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-check fa-3x text-gray-300"></i>
-                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DoneTicketCount</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check fa-3x text-gray-300"></i>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
     <!--Toltal ssigned tickets vs Done %-->
     <div class="col-xl-3 col-md-6 mb-4 ">
@@ -101,11 +122,11 @@
         <div class="card-header  py-3">
             <h5 class="m-0 font-weight-bold text-primary">
                 My Projects
-                    
+
             </h5>
-            
-             
-            
+
+
+
         </div>
         <div class="card-body">
             <div class="float-right">
@@ -161,7 +182,7 @@
 <div class="row pt-4">
 
     <div class="col-lg-6 col-md-12 col-sm-12">
-        <div class="card border-left-danger shadow mb-4">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">My Tickets By Priority</h6>
             </div>
@@ -169,12 +190,12 @@
                 <div class="chart-bar">
                     <canvas id="priorityChart"></canvas>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
-        <div class="card border-left-info shadow mb-4">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">News</h6>
             </div>
@@ -245,11 +266,11 @@
                 options: barChartOptions
             });
 
-            
+
 
 
         })
 
     </script>
 
- }
+}
