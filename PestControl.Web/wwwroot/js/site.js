@@ -3,6 +3,9 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#ticketTable').DataTable();
-    
+    $('#ticketTable').DataTable({
+        "scrollX": true
+    });
+
+
 });
