@@ -106,4 +106,5 @@ function buttonStates() {
 function load(pageCount) {
     generatePageNumbers(numberOfPages)
     loadRows()
+    
 }

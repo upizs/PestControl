@@ -4,30 +4,44 @@
 }
 
 <h2>All Tickets</h2>
-<!--Show all Not done tickets button-->
-<form method="post" asp-page-handler="notdone">
-    <button type="submit" class="btn btn-warning btn-icon-split ">
-        <span class="icon text-white"><i class="fas fa-exclamation"></i>
-        <span class="text">Show all not done tickets</span>
-    </button>
-</form>
 
-<!--Show all Done tickets button-->
-<form method="post" asp-page-handler="done">
-    <button type="submit" class="btn btn-success btn-icon-split ">
-        <span class="icon text-white"><i class="fas fa-check"></i></span>
-        <span class="text">Show done tickets</span>
-    </button>
-</form>
+<nav class="navbar navbar-expand pl-0 pr-0">
+    <ul class="navbar-nav">
+        <!--Show all Not done tickets button-->
+        <li class="nav-item">
+            <form method="post" asp-page-handler="notdone">
+                <button type="submit" class="btn btn-warning btn-icon-split ">
+                    <span class="icon text-white">
+                        <i class="fas fa-exclamation"></i></span>
+                        <span class="text">Not done tickets</span>
+                </button>
+            </form>
+        </li>
 
-<a asp-page="/Tickets/Index"
-   class="btn btn-primary btn-icon-split">
-    <span class="icon text-white"><i class="fas fa-list-ul"></i></span>
-    <span class="text">All tickets</span>
-</a>
-
-<a class="btn btn-primary"
-   asp-page="./Create">Add Ticket</a>
+        <!--Show all Done tickets button-->
+        <li class="nav-item">
+            <form method="post" asp-page-handler="done">
+                <button type="submit" class="btn btn-success btn-icon-split ">
+                    <span class="icon text-white"><i class="fas fa-check"></i></span>
+                    <span class="text">Done tickets</span>
+                </button>
+            </form>
+        </li>
+        <li class="nav-item">
+            <button asp-page="/Tickets/Index"
+               class="btn btn-primary btn-icon-split">
+                <span class="icon text-white"><i class="fas fa-list-ul"></i></span>
+                <span class="text">All tickets</span>
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-primary btn-icon-split" asp-page="./Create">
+                <span class="icon text-white"><i class="fas fa-plus"></i></span>
+                <span class="text">Add Ticket</span>
+            </button>
+        </li>
+    </ul>
+</nav>
 
 @if (Model.Message != null)
 {

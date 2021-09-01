@@ -5,75 +5,64 @@
 }
 
 
-<div class="row">
-    <div class="col-12 p-0">
-            <div class="pagination">
-                <button class="m-1 btn btn-sm btn-secondary backward" id="first">First</button>
-                <button class="m-1 btn btn-sm btn-secondary backward" id="prev">Previous</button>
-                <button class="m-1 btn btn-sm btn-secondary forward" id="next">Next</button>
-                <button class="m-1 btn btn-sm btn-secondary forward" id="last">last</button>
-                <div class="page-numbers" id="pageNumbers"></div>
-            </div>
-            <table class="table" id="paginatedTable">
-                <thead class="bg-secondary text-gray-200">
-                    <tr>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Id)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Title)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Project)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Priority)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Status)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().Type)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Single().DateCreated)</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ticket in Model)
-                    {
+<div class="card card-shadow mt-3">
+    <table class="table " id="ticketTable">
+        <thead class="thead-dark text-gray-200">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Id)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Title)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Project)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Priority)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Status)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().Type)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Single().DateCreated)</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model)
+            {
 
-                        <tr>
-                            <td scope="row">@ticket.Id</td>
-                            <td>@ticket.Title</td>
-                            <td>@ticket.Project.Name</td>
-                            <td>@ticket.Priority</td>
+                <tr>
+                    <td scope="row">@ticket.Id</td>
+                    <td>@ticket.Title</td>
+                    <td>@ticket.Project.Name</td>
+                    <td>@ticket.Priority</td>
 
-                            @{
-                                var status = ticket.Status.GetAttribute<DisplayAttribute>();
-                            }
-                            <td> @Html.DisplayName(status.Name) </td>
-                            <td> @ticket.Type</td>
-                            <td> @ticket.DateCreated.Date</td>
-                            <td>
-                                <a class="btn btn-info btn-sm"
-                                    asp-page="/Tickets/Details"
-                                    asp-route-ticketId="@ticket.Id">Details</a>
-
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <a class="btn btn-info btn-sm"
-                                        asp-page="/Tickets/Edit"
-                                        asp-route-ticketId="@ticket.Id">Edit</a>
-                                    @if (ticket.AssignedUserId == null)
-                                    {
-                                        <a class="btn btn-info btn-sm"
-                                            asp-page="/Tickets/AssignUser"
-                                            asp-route-ticketId="@ticket.Id">Assign User</a>
-                                    }
-                                    <a class="btn btn-danger btn-sm"
-                                        asp-page="/Tickets/Delete"
-                                        asp-route-ticketId="@ticket.Id">Delete</a>
-                                }
-                            </td>
-                        </tr>
+                    @{
+                        var status = ticket.Status.GetAttribute<DisplayAttribute>();
                     }
-                </tbody>
-            </table>
-                
-        
-    </div>
+                    <td> @Html.DisplayName(status.Name) </td>
+                    <td> @ticket.Type</td>
+                    <td> @ticket.DateCreated.Date</td>
+                    <td>
+                        <a class="btn btn-info btn-sm"
+                           asp-page="/Tickets/Details"
+                           asp-route-ticketId="@ticket.Id">Details</a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-info btn-sm"
+                               asp-page="/Tickets/Edit"
+                               asp-route-ticketId="@ticket.Id">Edit</a>
+                            @if (ticket.AssignedUserId == null)
+                            {
+                                <a class="btn btn-info btn-sm"
+                                   asp-page="/Tickets/AssignUser"
+                                   asp-route-ticketId="@ticket.Id">Assign User</a>
+                            }
+                            <a class="btn btn-danger btn-sm"
+                               asp-page="/Tickets/Delete"
+                               asp-route-ticketId="@ticket.Id">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
+<!--Section scripts is not working in partial view-->
 
-<script src="~/js/tables.js"></script>
 
 

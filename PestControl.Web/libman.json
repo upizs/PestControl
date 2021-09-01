@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "datatables.net-bs4@3.2.2",
+      "destination": "wwwroot/datatables.net-bs4/",
+      "files": [
+        "dataTables.bootstrap4.min.js",
+        "dataTables.bootstrap4.css",
+        "dataTables.bootstrap4.js",
+        "dataTables.bootstrap4.min.css"
+      ]
+    }
+  ]
+}
