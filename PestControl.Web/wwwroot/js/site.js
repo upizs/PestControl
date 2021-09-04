@@ -3,9 +3,15 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#ticketTable').DataTable({
-        "scrollX": true
-    });
-
-
+    var table = $('#ticketTable').DataTable({
+        pagingType: 'full_numbers',
+        scrollX: true,
+        createdRow: function (row, data, index) {
+            if (data[3] === "Highest") {
+                $('td', row).eq(3).addClass('text-danger')
+            } if (data[3] === "High") {
+                $('td', row).eq(3).addClass('text-danger')
+            } 
+        }
+    })
 });

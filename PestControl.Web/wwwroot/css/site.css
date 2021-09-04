@@ -79,3 +79,7 @@ body {
 form.card-form{
     display:none;
 }
+
+.dataTables_scroll {
+    overflow: auto;
+}

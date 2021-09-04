@@ -3,58 +3,76 @@
 @{
     ViewData["Title"] = "My Tickets";
 }
+<div class="row">
+    @if (User.IsInRole("Admin"))
+    {
+        <!--Show all Closed tickets button-->
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+            <form method="post" asp-page-handler="closed">
+                <button type="submit" class="btn btn-success btn-block ">
+                    <span class="icon text-white float-left">
+                    <i class="fas fa-check-circle"></i>
+                    </span>
+                    <span class="text">Closed tickets</span>
+                </button>
+            </form>
+        </div>
+        <!--Show all Not Assigned tickets button-->
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+            <form method="post" asp-page-handler="notassigned">
+                <button type="submit" class="btn btn-warning btn-block ">
+                    <span class="icon text-white float-left">
+                    <i class="far fa-clipboard "></i></span>
+                    <span class="text">Not Assigned tickets</span>
+                </button>
+            </form>
+        </div>
+    }
+    else
+    {
 
-@if (User.IsInRole("Admin"))
-{
-    <!--Show all Closed tickets button-->
-    <form method="post" asp-page-handler="closed">
-        <button type="submit" class="btn btn-success btn-icon-split ">
-            <span class="icon text-white"><i class="fas fa-check-circle"></i></span>
-            <span class="text">Closed tickets</span>
-        </button>
-    </form>
-    <!--Show all Not Assigned tickets button-->
-    <form method="post" asp-page-handler="notassigned">
-        <button type="submit" class="btn btn-warning btn-icon-split ">
-            <span class="icon text-white"><i class="far fa-clipboard"></i></span>
-            <span class="text">Not Assigned tickets</span>
-        </button>
-    </form>
-}
-else
-{
+    <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+        <!--Show all Not done tickets button-->
+        <form method="post" asp-page-handler="notdone">
+            <button type="submit" class="btn btn-warning btn-block">
+                <span class="icon text-white float-left">
+                    <i class="fas fa-exclamation"></i>
+                </span>
+                <span class="text">All not done tickets</span>
+            </button>
+        </form>
+    </div>
 
-    <!--Show all Not done tickets button-->
-    <form method="post" asp-page-handler="notdone">
-        <button type="submit" class="btn btn-warning btn-icon-split ">
-            <span class="icon text-white">
-                <i class="fas fa-exclamation"></i>
-            </span>
-            <span class="text">All not done tickets</span>
-        </button>
-    </form>
-
-    <!--Show all Done tickets button-->
-    <form method="post" asp-page-handler="done">
-        <button type="submit" class="btn btn-success btn-icon-split ">
-            <span class="icon text-white"><i class="fas fa-check"></i></span>
-            <span class="text">Done tickets</span>
-        </button>
-    </form>
-}
-<!--Show all High priority tickets button-->
-<form method="post" asp-page-handler="priority">
-    <button type="submit" class="btn btn-danger btn-icon-split ">
-        <span class="icon text-white"><i class="fas fa-fire-alt"></i></span>
-        <span class="text">High Priority Tickets</span>
-    </button>
-</form>
-<!--All my tickets button-->
-<a asp-page="/Tickets/MyTickets"
-   class="btn btn-primary btn-icon-split">
-    <span class="icon text-white"><i class="fas fa-list-ul"></i></span>
-    <span class="text">All my tickets</span>
-</a>
+        <!--Show all Done tickets button-->
+    <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+        <form method="post" asp-page-handler="done">
+            <button type="submit" class="btn btn-success btn-block">
+                <span class="icon text-white float-left">
+                <i class="fas fa-check"></i></span>
+                <span class="text">Done tickets</span>
+            </button>
+        </form>
+    </div>
+    }
+    <!--Show all High priority tickets button-->
+    <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+        <form method="post" asp-page-handler="priority">
+            <button type="submit" class="btn btn-danger btn-block">
+                <span class="icon text-white float-left">
+                <i class="fas fa-fire-alt"></i></span>
+                <span class="text">High Priority Tickets</span>
+            </button>
+        </form>
+    </div>
+    <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 mt-1">
+    <!--All my tickets button-->
+        <a asp-page="/Tickets/MyTickets"
+            class="btn btn-primary btn-block">
+            <span class="icon text-white float-left"><i class="fas fa-list-ul"></i></span>
+            <span class="text">All my tickets</span>
+        </a>
+    </div>
+</div>
 
 <!--Ticket table-->
 @if (Model.Tickets.Any())
