@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PestControl.Data\TicketControl.Data.csproj" />
+    <ProjectReference Include="..\TicketControl.Data\TicketControl.Data.csproj" />
   </ItemGroup>
 
 </Project>
