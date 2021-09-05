@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Models
+namespace TicketControl.Data.Models
 {
     public class Project
     {
@@ -33,6 +33,7 @@ namespace PestControl.Data.Models
         public string CreatedById { get; set; }
         public IList<Ticket> Tickets { get; set; } = new List<Ticket>();
         public IList<Comment> Comments { get; set; } = new List<Comment>();
+        public IList<History> Histories { get; set; } = new List<History>();
 
     }
 }

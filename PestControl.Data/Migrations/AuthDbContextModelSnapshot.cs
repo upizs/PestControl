@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PestControl.Data.Data;
+using TicketControl.Data.Data;
 
-namespace PestControl.Data.Migrations
+namespace TicketControl.Data.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
     partial class AuthDbContextModelSnapshot : ModelSnapshot
@@ -165,7 +165,7 @@ namespace PestControl.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -212,7 +212,7 @@ namespace PestControl.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Comment", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,50 @@ namespace PestControl.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Project", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.History", b =>
+                {
+                    b.Property<int>("HistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("DateCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("FieldChanged")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NewValue")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OldValue")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("HistoryId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("Histories");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,7 +317,7 @@ namespace PestControl.Data.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Ticket", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,13 +367,13 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("ApplicationUserProject", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("ApplicationUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PestControl.Data.Models.Project", null)
+                    b.HasOne("TicketControl.Data.Models.Project", null)
                         .WithMany()
                         .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -348,7 +391,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -357,7 +400,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -372,7 +415,7 @@ namespace PestControl.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -381,25 +424,25 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Comment", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.Comment", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.Project", "Project")
+                    b.HasOne("TicketControl.Data.Models.Project", "Project")
                         .WithMany("Comments")
                         .HasForeignKey("ProjectId");
 
-                    b.HasOne("PestControl.Data.Models.Ticket", "Ticket")
+                    b.HasOne("TicketControl.Data.Models.Ticket", "Ticket")
                         .WithMany("Comments")
                         .HasForeignKey("TicketId");
 
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", "Author")
-                        .WithMany()
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", "Author")
+                        .WithMany("Comments")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Author");
@@ -409,19 +452,34 @@ namespace PestControl.Data.Migrations
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Ticket", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.History", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", "AssignedUser")
+                    b.HasOne("TicketControl.Data.Models.Project", "Project")
                         .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("TicketControl.Data.Models.Ticket", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketId");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.Ticket", b =>
+                {
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", "AssignedUser")
+                        .WithMany("Tickets")
                         .HasForeignKey("AssignedUserId");
 
-                    b.HasOne("PestControl.Data.Models.Project", "Project")
+                    b.HasOne("TicketControl.Data.Models.Project", "Project")
                         .WithMany("Tickets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", "SubmittedByUser")
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", "SubmittedByUser")
                         .WithMany()
                         .HasForeignKey("SubmittedUserId");
 
@@ -432,14 +490,21 @@ namespace PestControl.Data.Migrations
                     b.Navigation("SubmittedByUser");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Project", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.Ticket", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.Project", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.Ticket", b =>
                 {
                     b.Navigation("Comments");
                 });

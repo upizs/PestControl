@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PestControl.Data.Data;
+using TicketControl.Data.Data;
 
-namespace PestControl.Data.Migrations
+namespace TicketControl.Data.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
     [Migration("20210814200238_AddedNormalizedUserProperties")]
@@ -124,7 +124,7 @@ namespace PestControl.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.ApplicationRole", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -151,7 +151,7 @@ namespace PestControl.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("PestControl.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -193,7 +193,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationRole", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -202,7 +202,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -211,7 +211,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -220,13 +220,13 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationRole", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,7 +235,7 @@ namespace PestControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PestControl.Data.Models.ApplicationUser", null)
+                    b.HasOne("TicketControl.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Contracts;
-using PestControl.Data.Data;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Data;
+using TicketControl.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Repositories
+namespace TicketControl.Data.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
@@ -31,6 +31,7 @@ namespace PestControl.Data.Repositories
             //Have to include all these to make Cascade deletion
             var project = await _db.Projects
                 .Include(p=>p.Comments)
+                .Include(p => p.Histories)
                 .Include(p => p.Tickets)
                 .ThenInclude(t => t.Comments)
                 .FirstOrDefaultAsync(p => p.Id == entity.Id);

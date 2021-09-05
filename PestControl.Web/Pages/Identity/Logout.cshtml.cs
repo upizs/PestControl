@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PestControl.Data.Models;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Identity
+namespace TicketControl.Web.Pages.Identity
 {
     [AllowAnonymous]
     public class LogoutModel : PageModel

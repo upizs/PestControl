@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    var table = $('#ticketTable').DataTable({
+    var ticketTable = $('#ticketTable').DataTable({
         pagingType: 'full_numbers',
         scrollX: true,
         createdRow: function (row, data, index) {
@@ -14,4 +14,9 @@ $(document).ready(function () {
             } 
         }
     })
+    //Learn to remove pagination and how many entries depending on data size
+    var universalTable = $('#universalTable').DataTable({
+        scrollX:true
+    })
+
 });

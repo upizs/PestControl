@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PestControl.Web", "PestControl.Web\PestControl.Web.csproj", "{52BC6966-C872-4FA8-A6B7-EA880D67E2AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketControl.Web", "PestControl.Web\TicketControl.Web.csproj", "{52BC6966-C872-4FA8-A6B7-EA880D67E2AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PestControl.Data", "PestControl.Data\PestControl.Data.csproj", "{9FD8A14B-8235-4143-BD80-C2AEAE03B0B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketControl.Data", "PestControl.Data\TicketControl.Data.csproj", "{9FD8A14B-8235-4143-BD80-C2AEAE03B0B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

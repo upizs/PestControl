@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Contracts;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Projects
+namespace TicketControl.Web.Pages.Projects
 {
     [Authorize(Roles = "Admin")]
     public class AssignUsersModel : PageModel

@@ -1,11 +1,11 @@
-﻿using PestControl.Data.Models;
+﻿using TicketControl.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Contracts
+namespace TicketControl.Data.Contracts
 {
     public interface ITicketRepository :IRepositoryBase<Ticket>
     {

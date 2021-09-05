@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Models
+namespace TicketControl.Data.Models
 {
     public static class Extensions
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PestControl.Web.Pages.Identity
+namespace TicketControl.Web.Pages.Identity
 {
     [AllowAnonymous]
     public class ResetPasswordConfirmationModel : PageModel

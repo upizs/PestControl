@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Models;
+using TicketControl.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Data
+namespace TicketControl.Data.Data
 {
     public class AuthDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
@@ -19,6 +19,7 @@ namespace PestControl.Data.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<History> Histories { get; set; }
 
         //I use model builder to remove all the unnecessary rows (dont see value in them yet) 
         //Found out what Normalized Columns, Security Stamp,

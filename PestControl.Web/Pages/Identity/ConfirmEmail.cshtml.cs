@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using PestControl.Data.Models;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Identity
+namespace TicketControl.Web.Pages.Identity
 {
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel

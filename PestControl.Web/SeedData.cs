@@ -1,12 +1,12 @@
-﻿using PestControl.Data;
+﻿using TicketControl.Data;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PestControl.Data.Models;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web
+namespace TicketControl.Web
 {
     public static class SeedData
     {

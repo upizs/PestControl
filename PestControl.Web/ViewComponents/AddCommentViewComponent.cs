@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PestControl.Data.Contracts;
-using PestControl.Data.Models;
-using PestControl.Web.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Models;
+using TicketControl.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web.ViewComponents
+namespace TicketControl.Web.ViewComponents
 {
     public class AddCommentViewComponent : ViewComponent
     {

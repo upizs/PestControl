@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PestControl.Web.Pages.Identity.Admin
+namespace TicketControl.Web.Pages.Identity.Admin
 {
     public class NotFoundModel : PageModel
     {

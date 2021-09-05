@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web.Pages
+namespace TicketControl.Web.Pages
 {
     public class PrivacyModel : PageModel
     {

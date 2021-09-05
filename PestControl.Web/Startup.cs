@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PestControl.Data.Contracts;
-using PestControl.Data.Data;
-using PestControl.Data.Models;
-using PestControl.Data.Repositories;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Data;
+using TicketControl.Data.Models;
+using TicketControl.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web
+namespace TicketControl.Web
 {
     public class Startup
     {

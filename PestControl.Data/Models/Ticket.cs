@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Models
+namespace TicketControl.Data.Models
 {
     public enum Priority
     {
@@ -65,6 +65,7 @@ namespace PestControl.Data.Models
         public ApplicationUser SubmittedByUser { get; set; }
         public string SubmittedUserId { get; set; }
         public IList<Comment> Comments { get; set; } = new List<Comment>();
+        public IList<History> Histories { get; set; } = new List<History>();
 
 
     }

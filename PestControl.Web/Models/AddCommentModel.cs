@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web.Models
+namespace TicketControl.Web.Models
 {
     public class AddCommentModel
     {

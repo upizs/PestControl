@@ -1,8 +1,8 @@
 ﻿@page
-@model PestControl.Web.Pages.Projects.ListModel
+@model TicketControl.Web.Pages.Projects.ListModel
 @{
 }
-<h2>All Projects</h2>
+
 
 @if (Model.Message != null)
 {
@@ -11,69 +11,77 @@
     </div>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Description)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().DateCreated)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().ApplicationUsers)</th>
-            <th scope="col">Actions</th>
-        </tr>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">My Projects</h1>
+    @if (User.IsInRole("Admin"))
+    {
+    <a asp-page="./Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add Project
+    </a>
+    }
+</div>
+<div class="card card-shadow mt-3">
 
-    </thead>
-    <tbody>
-        @foreach (var project in Model.Projects)
-        {
+    <table class="table" style="width:100%" id="universalTable">
+        <thead>
             <tr>
-                <td scope="row">
-                    @project.Name
-                </td>
-                <td>
-                    @project.Description
-                </td>
-                <td>
-                    @project.DateCreated.Date
-                </td>
-                <td>
-                    @if (project.ApplicationUsers.Any())
-                    {
-                        @project.ApplicationUsers.Count()
-                    }
-                    else
-                    {
-                        <p>0</p>
-                    }
-                </td>
-                <td>
-
-                    <a class="btn btn-info btn-sm"
-                       asp-page="./Details"
-                       asp-route-projectId="@project.Id">Details</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-
-                        <a class="btn btn-info btn-sm"
-                           asp-page="./AssignUsers"
-                           asp-route-projectId="@project.Id">Assign Users</a>
-                        <a class="btn btn-info btn-sm"
-                           asp-page="./Edit"
-                           asp-route-projectId="@project.Id">Edit</a>
-                        <a class="btn btn-danger btn-sm"
-                           asp-page="./Delete"
-                           asp-route-projectId="@project.Id">Delete</a>
-                    }
-
-                </td>
+                <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Name)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().Description)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().DateCreated)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Projects.Single().ApplicationUsers)</th>
+                <th scope="col">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
 
-@if (User.IsInRole("Admin"))
-{
-    <a class="btn btn-primary"
-       asp-page="./Create">Add New Project</a>
-}
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr>
+                    <td scope="row">
+                        @project.Name
+                    </td>
+                    <td>
+                        @project.Description
+                    </td>
+                    <td>
+                        @project.DateCreated.Date
+                    </td>
+                    <td>
+                        @if (project.ApplicationUsers.Any())
+                        {
+                            @project.ApplicationUsers.Count()
+                        }
+                        else
+                        {
+                            <p>0</p>
+                        }
+                    </td>
+                    <td>
+
+                        <a class="btn btn-info btn-sm"
+                            asp-page="./Details"
+                            asp-route-projectId="@project.Id">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+
+                            <a class="btn btn-info btn-sm"
+                                asp-page="./AssignUsers"
+                                asp-route-projectId="@project.Id">Assign Users</a>
+                            <a class="btn btn-info btn-sm"
+                                asp-page="./Edit"
+                                asp-route-projectId="@project.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm"
+                                asp-page="./Delete"
+                                asp-route-projectId="@project.Id">Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 

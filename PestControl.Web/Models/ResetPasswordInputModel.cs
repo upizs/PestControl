@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PestControl.Web.Pages.Identity
+namespace TicketControl.Web.Pages.Identity
 {
     public partial class ResetPasswordModel
     {

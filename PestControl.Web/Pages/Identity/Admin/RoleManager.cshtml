@@ -1,79 +1,88 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
-@using PestControl.Data.Models;
+@using TicketControl.Data.Models;
 
 @inject UserManager<ApplicationUser> UserManager
 
-@model PestControl.Web.Pages.Identity.Admin.RoleManagerModel
+@model TicketControl.Web.Pages.Identity.Admin.RoleManagerModel
 @{
     ViewData["Title"] = "Role manager";
 }
 
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">User Manager</h1>
+    
+</div>
 
 <!--All Users-->
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().UserName)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().Email)</th>
-            <th scope="col">Role</th>
-            <th scope="col">Assign Role</th>
-            <th scope="col">Delete User</th>
-        </tr>
+<div class="card card-shadow mt-3">
+    <table class="table" style="width:100%" id="universalTable">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().UserName)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Users.Single().Email)</th>
+                <th scope="col">Role</th>
+                <th scope="col">Assign Role</th>
+                <th scope="col">Delete User</th>
+            </tr>
 
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
 
-        <tr>
-            <td scope="row">
-                @user.UserName
-            </td>
-            <td>
-                @user.Email
-            </td>
-            @{
-                var roles = await UserManager.GetRolesAsync(user);
-                var currentRole = roles.SingleOrDefault();
+                <tr>
+                    <td scope="row">
+                        @user.UserName
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    @{
+                        var roles = await UserManager.GetRolesAsync(user);
+                        var currentRole = roles.SingleOrDefault();
+                    }
+                    <td>
+                        @currentRole
+                    </td>
+                    <!--Roles-->
+                    <td>
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="form-group">
+                                        <select class="form-control" asp-for="RoleToAssingId">
+                                            @foreach (var role in Model.Roles)
+                                            {
+                                                <option value="@role.Id">@role.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-success btn-block btn-sm">
+                                        <span class="icon text-white "><i class="fas fa-check"></i></span>
+                                    </button>
+                                </div>
+                                <input type="hidden" name="userId" value="@user.Id" />
+                            </div>
+                        </form>
+
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="delete">
+
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <input type="hidden" name="userId" value="@user.Id" />
+                        </form>
+
+                    </td>
+                </tr>
+
             }
-            <td>
-                @currentRole
-            </td>
-            <!--Roles-->
-            <td>
-                <form method="post">
-
-                    <div class="form-group">
-                        <label asp-for="Roles"></label>
-                        <select class="form-control" asp-for="RoleToAssingId">
-                            @foreach (var role in Model.Roles)
-                            {
-                                <option value="@role.Id">@role.Name</option>
-                            }
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-sm">Assign</button>
-                    <input type="hidden" name="userId" value="@user.Id" />
-                </form>
-
-            </td>
-            <td>
-                <form method="post" asp-page-handler="delete">
-
-                    <button type="submit" class="btn btn-primary btn-sm">Assign</button>
-                    <input type="hidden" name="userId" value="@user.Id" />
-                </form>
-
-            </td>
-        </tr>
-
-        }
-    </tbody>
-</table>
-
-<a asp-page=".\List" class="btn btn-primary">Done</a>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

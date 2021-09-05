@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PestControl.Data.Migrations
+namespace TicketControl.Data.Migrations
 {
     public partial class AddedTicketsAndComments : Migration
     {

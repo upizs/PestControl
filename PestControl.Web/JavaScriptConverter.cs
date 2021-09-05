@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web
+namespace TicketControl.Web
 {
     public class JavaScriptConverter
     {

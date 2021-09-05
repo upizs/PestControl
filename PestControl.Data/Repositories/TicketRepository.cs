@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Contracts;
-using PestControl.Data.Data;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Data;
+using TicketControl.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Repositories
+namespace TicketControl.Data.Repositories
 {
     public class TicketRepository : ITicketRepository
     {
@@ -30,6 +30,7 @@ namespace PestControl.Data.Repositories
             //Have to include all these to make Cascade deletion
             var ticket = await _db.Tickets
                 .Include(t=>t.Comments)
+                .Include(p => p.Histories)
                 .FirstOrDefaultAsync(t => t.Id == entity.Id);
             _db.Tickets.Remove(ticket);
             return await SaveAsync();

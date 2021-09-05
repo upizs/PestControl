@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using PestControl.Data.Models;
-using PestControl.Web.Models;
+using TicketControl.Data.Models;
+using TicketControl.Web.Models;
 
-namespace PestControl.Web.Pages.Identity
+namespace TicketControl.Web.Pages.Identity
 {
     public class RegisterModel : PageModel
     {

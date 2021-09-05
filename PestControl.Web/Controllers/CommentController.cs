@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PestControl.Web.Models;
+using TicketControl.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PestControl.Web.Controllers
+namespace TicketControl.Web.Controllers
 {
     //I use Controller for comments because I want to have a reusable comment form
     public class CommentController : Controller

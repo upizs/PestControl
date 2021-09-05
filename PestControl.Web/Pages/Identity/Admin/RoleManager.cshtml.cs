@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Contracts;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Identity.Admin
+namespace TicketControl.Web.Pages.Identity.Admin
 {
     [Authorize(Roles = "Admin")]
     public class RoleManagerModel : PageModel
@@ -50,8 +50,13 @@ namespace PestControl.Web.Pages.Identity.Admin
             var role = await _roleManager.FindByIdAsync(RoleToAssingId);
             if (UserToChangeRole == null)
                 return RedirectToPage("/Identity/NotFound");
+
             if (await _roleManager.RoleExistsAsync(role.Name))
             {
+                var roles = await _userManager.GetRolesAsync(UserToChangeRole);
+                //in my app user can have only one role.
+                if (roles.Count() > 0)
+                    await _userManager.RemoveFromRoleAsync(UserToChangeRole, roles.FirstOrDefault());
                await  _userManager.AddToRoleAsync(UserToChangeRole, role.Name);
             }
 

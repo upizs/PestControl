@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PestControl.Data.Contracts;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Comments
+namespace TicketControl.Web.Pages.Comments
 {
     public class EditModel : PageModel
     {

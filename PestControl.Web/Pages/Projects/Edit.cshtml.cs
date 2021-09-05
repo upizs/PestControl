@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PestControl.Data.Contracts;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Models;
 
-namespace PestControl.Web.Pages.Projects
+namespace TicketControl.Web.Pages.Projects
 {
     [Authorize(Roles ="Admin")]
     public class EditModel : PageModel

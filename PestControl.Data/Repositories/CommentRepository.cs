@@ -1,15 +1,15 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using PestControl.Data.Contracts;
-using PestControl.Data.Data;
-using PestControl.Data.Models;
+using TicketControl.Data.Contracts;
+using TicketControl.Data.Data;
+using TicketControl.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Repositories
+namespace TicketControl.Data.Repositories
 {
     public class CommentRepository : ICommentRepository
     {

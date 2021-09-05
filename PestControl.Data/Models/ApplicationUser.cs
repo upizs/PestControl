@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PestControl.Data.Models
+namespace TicketControl.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {
