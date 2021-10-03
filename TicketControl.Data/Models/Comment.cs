@@ -23,7 +23,7 @@ namespace TicketControl.Data.Models
         public Project Project { get; set; }
         [Required(ErrorMessage ="You need to write something to make a comment")]
         public string Message { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }

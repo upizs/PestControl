@@ -221,7 +221,7 @@ namespace TicketControl.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Message")
@@ -258,7 +258,7 @@ namespace TicketControl.Data.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("DateCreated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
@@ -286,10 +286,10 @@ namespace TicketControl.Data.Migrations
                     b.Property<string>("AssignedUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset>("DateCreated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset>("DateUpdated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")

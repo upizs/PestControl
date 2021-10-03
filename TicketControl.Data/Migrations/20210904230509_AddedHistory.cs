@@ -18,7 +18,7 @@ namespace TicketControl.Data.Migrations
                     FieldChanged = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OldValue = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NewValue = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetimeoffset", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

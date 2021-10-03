@@ -10,8 +10,8 @@ using TicketControl.Data.Data;
 namespace TicketControl.Data.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20210815140603_AddedDateCreatedToProject")]
-    partial class AddedDateCreatedToProject
+    [Migration("20211003184516_ChangedDateTime")]
+    partial class ChangedDateTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,33 @@ namespace TicketControl.Data.Migrations
                     b.HasIndex("ProjectsId");
 
                     b.ToTable("ApplicationUserProject");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -140,7 +167,7 @@ namespace TicketControl.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TicketControl.Data.Models.ApplicationRole", b =>
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -148,29 +175,6 @@ namespace TicketControl.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -188,6 +192,9 @@ namespace TicketControl.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -215,9 +222,10 @@ namespace TicketControl.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProjectId")
@@ -240,6 +248,49 @@ namespace TicketControl.Data.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("TicketControl.Data.Models.History", b =>
+                {
+                    b.Property<int>("HistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FieldChanged")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NewValue")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OldValue")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HistoryId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("Histories");
+                });
+
             modelBuilder.Entity("TicketControl.Data.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -247,14 +298,21 @@ namespace TicketControl.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -272,10 +330,10 @@ namespace TicketControl.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -326,7 +384,7 @@ namespace TicketControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("TicketControl.Data.Models.ApplicationRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,7 +411,7 @@ namespace TicketControl.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("TicketControl.Data.Models.ApplicationRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -378,15 +436,15 @@ namespace TicketControl.Data.Migrations
             modelBuilder.Entity("TicketControl.Data.Models.Comment", b =>
                 {
                     b.HasOne("TicketControl.Data.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("ProjectId");
 
                     b.HasOne("TicketControl.Data.Models.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("TicketId");
 
                     b.HasOne("TicketControl.Data.Models.ApplicationUser", "Author")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Author");
@@ -396,14 +454,29 @@ namespace TicketControl.Data.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("TicketControl.Data.Models.History", b =>
+                {
+                    b.HasOne("TicketControl.Data.Models.Project", "Project")
+                        .WithMany("Histories")
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("TicketControl.Data.Models.Ticket", "Ticket")
+                        .WithMany("Histories")
+                        .HasForeignKey("TicketId");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Ticket");
+                });
+
             modelBuilder.Entity("TicketControl.Data.Models.Ticket", b =>
                 {
                     b.HasOne("TicketControl.Data.Models.ApplicationUser", "AssignedUser")
-                        .WithMany()
+                        .WithMany("Tickets")
                         .HasForeignKey("AssignedUserId");
 
                     b.HasOne("TicketControl.Data.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Tickets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -417,6 +490,29 @@ namespace TicketControl.Data.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("SubmittedByUser");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.Project", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Histories");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketControl.Data.Models.Ticket", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Histories");
                 });
 #pragma warning restore 612, 618
         }

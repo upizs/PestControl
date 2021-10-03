@@ -12,21 +12,22 @@ namespace TicketControl.BLL.Managers
     public class TicketManager
     {
         private readonly ITicketRepository _ticketRepository;
-        private readonly IHistoryRepository _historyRepository;
+        private readonly HistoryManager _historyManager;
         private readonly IProjectRepository _projectRepository;
         private readonly Helper _helper;
 
         public TicketManager(ITicketRepository ticketRepository,
-            IHistoryRepository historyRepository,
+            HistoryManager historyManager,
             IProjectRepository projectRepository)
         {
             _ticketRepository = ticketRepository;
-            _historyRepository = historyRepository;
+            _historyManager = historyManager;
             _projectRepository = projectRepository;
             _helper = new Helper();
 
         }
-        public async Task<bool> Create(Ticket ticket)
+        #region Standart methods
+        public async Task<bool> CreateAsync(Ticket ticket)
         {
             return await _ticketRepository.CreateAsync(ticket);
         }
@@ -36,9 +37,10 @@ namespace TicketControl.BLL.Managers
                 //throw exception
                 return false;
 
-            var ticketChanges = GetTicketChanges(await GetByIdAsync(ticket.Id), ticket, userName);
-            await UpdateHistory(ticketChanges);
-            
+            var ticketChanges = _historyManager
+                .GetTicketChanges(await GetByIdAsync(ticket.Id), ticket, userName);
+            await _historyManager.UpdateHistory(ticketChanges);
+            ticket.DateUpdated = DateTime.Now;
             var result = await _ticketRepository.UpdateAsync(ticket);
             return result;
         }
@@ -146,81 +148,8 @@ namespace TicketControl.BLL.Managers
             return result;
         }
 
-
-        #region Ticket History
-        public List<History> GetTicketChanges(Ticket originalTicket, Ticket ticketToCompare, string changesAuthor)
-        {
-            List<History> ticketChanges = new();
-
-            if (originalTicket == null || ticketToCompare == null)
-                //throw exception
-                return ticketChanges;
-
-            var history = new History
-            {
-                DateCreated = DateTimeOffset.Now,
-                User = changesAuthor,
-                TicketId = ticketToCompare.Id
-            };
-
-            if (originalTicket.Title.ToLower() != ticketToCompare.Title.ToLower())
-                ticketChanges.Add(GetNewTicketHistory(history, "Title", originalTicket.Title, ticketToCompare.Title));
-            if (originalTicket.Description.ToLower() != ticketToCompare.Description.ToLower())
-                ticketChanges.Add(GetNewTicketHistory(history, "Description", originalTicket.Description, ticketToCompare.Description));
-            if (originalTicket.Status != ticketToCompare.Status)
-                ticketChanges.Add(GetNewTicketHistory(history, "Status",
-                    originalTicket.Status.GetAttribute<DisplayAttribute>().Name,
-                    ticketToCompare.Status.GetAttribute<DisplayAttribute>().Name));
-            if (originalTicket.Priority != ticketToCompare.Priority)
-                ticketChanges.Add(GetNewTicketHistory(history, "Priority",
-                    originalTicket.Priority.GetAttribute<DisplayAttribute>().Name,
-                    ticketToCompare.Priority.GetAttribute<DisplayAttribute>().Name));
-            if (originalTicket.Type != ticketToCompare.Type)
-                ticketChanges.Add(GetNewTicketHistory(history, "Type",
-                    originalTicket.Type.GetAttribute<DisplayAttribute>().Name,
-                    ticketToCompare.Type.GetAttribute<DisplayAttribute>().Name));
-
-            if (originalTicket.AssignedUserId != ticketToCompare.AssignedUserId)
-            {
-                //These checks are necessary in case there is no Assigned User
-                string newUserName = "None";
-                string oldUserName = "None";
-                if (originalTicket.AssignedUser != null)
-                    oldUserName = originalTicket.AssignedUser.UserName;
-                if (ticketToCompare.AssignedUser != null)
-                    newUserName = ticketToCompare.AssignedUser.UserName;
-
-                ticketChanges.Add(GetNewTicketHistory(history, "Assigned User",
-                    oldUserName, newUserName));
-            }
-
-            return ticketChanges;
-
-        }
-
-        public History GetNewTicketHistory(History history, string fieldChanged, string oldValue, string newValue)
-        {
-            return new History
-            {
-                DateCreated = history.DateCreated,
-                FieldChanged = fieldChanged,
-                OldValue = oldValue,
-                NewValue = newValue,
-                TicketId = history.TicketId,
-                User = history.User
-            };
-        }
-
-        public async Task UpdateHistory(List<History> ticketChanges)
-        {
-            if (ticketChanges == null) return;
-
-            foreach (var change in ticketChanges)
-            {
-                await _historyRepository.CreateAsync(change);
-            }
-        }
         #endregion
+       
 
     }
 }

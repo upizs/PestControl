@@ -25,7 +25,7 @@ namespace TicketControl.Data.Models
         [Display(Name = "Assigned Users")]
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
         [Display(Name = "Date Created")]
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         [ForeignKey("CreatedById")]
         [Display(Name="Created By")]
         [NotMapped]

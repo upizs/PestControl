@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
@@ -12,13 +13,13 @@ namespace TicketControl.Web.Pages.Comments
 {
     public class EditModel : PageModel
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly CommentManager _commentManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public EditModel(ICommentRepository commentRepository, 
+        public EditModel(CommentManager commentManager,
             UserManager<ApplicationUser> userManager)
         {
-            _commentRepository = commentRepository;
+            _commentManager = commentManager;
             _userManager = userManager;
         }
         [BindProperty]
@@ -26,16 +27,19 @@ namespace TicketControl.Web.Pages.Comments
         public string ReturnUrl { get; set; }
         public async Task<IActionResult> OnGet(int commentId, string returnUrl)
         {
-            Comment = await _commentRepository.GetByIdAsync(commentId);
+            Comment = await _commentManager.GetByIdAsync(commentId);
             returnUrl = returnUrl ?? Url.Content("/Index");
-            
             var user = await _userManager.GetUserAsync(User);
+            #region Validations
             //Prevets users other than comment author accesing this page
-            if (user == null 
-                || Comment.UserId != user.Id 
-                || Comment == null)
+            if (Comment == null)
                 return RedirectToPage("./NotFound", returnUrl);
-
+            if (user == null)
+                return RedirectToPage("/Identity/Login");
+            if (user.Id != Comment.UserId)
+                return Redirect("~" + returnUrl);
+            
+            #endregion
             ReturnUrl = returnUrl;
             return Page();
         }
@@ -43,12 +47,17 @@ namespace TicketControl.Web.Pages.Comments
         public async Task<IActionResult> OnPost( string returnUrl=null)
         {
             returnUrl = returnUrl ?? Url.Content("/Index");
-
+            var user = await _userManager.GetUserAsync(User);
+            #region Validations
             if (string.IsNullOrWhiteSpace(Comment.Message))
                 return Page();
+            if(user == null)
+                return RedirectToPage("/Identity/Login");
+            if(user.Id != Comment.UserId)
+                return Redirect("~" + returnUrl);
+            #endregion
 
-            await _commentRepository.UpdateAsync(Comment);
-
+            await _commentManager.UpdateAsync(Comment);
             TempData["Message"] = "Comment edited!";
             return Redirect("~" + returnUrl);
         }

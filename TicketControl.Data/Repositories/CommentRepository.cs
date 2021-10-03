@@ -47,7 +47,7 @@ namespace TicketControl.Data.Repositories
             return await _db.Comments.OrderBy(p => p.Date).ToListAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsByProject(int projectId)
+        public async Task<ICollection<Comment>> GetCommentsByProject(int projectId)
         {
             return await _db.Comments
                 .Where(c => c.ProjectId == projectId)
@@ -55,7 +55,7 @@ namespace TicketControl.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsByTicket(int ticketId)
+        public async Task<ICollection<Comment>> GetCommentsByTicket(int ticketId)
         {
             return await _db.Comments
                 .Where(c => c.TicketId == ticketId)
@@ -63,7 +63,7 @@ namespace TicketControl.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsByUser(string userId)
+        public async Task<ICollection<Comment>> GetCommentsByUser(string userId)
         {
             return await _db.Comments
                 .Where(c => c.UserId == userId)

@@ -14,27 +14,24 @@ using TicketControl.BLL.Managers;
 
 namespace TicketControl.Web.Pages.Tickets
 {
-    [Authorize(Roles ="Admin")]
-    public class AssignUserModel : PageModel
+        [Authorize(Roles ="Admin")]
+        public class AssignUserModel : PageModel
         {
+            private readonly ProjectManager _projectManager;
             private readonly UserManager<ApplicationUser> _userManager;
-            private readonly IProjectRepository _projectRepository;
             private readonly TicketManager _ticketManager;
 
-        public AssignUserModel(
-                UserManager<ApplicationUser> userManager,
-                IProjectRepository projectRepository,
-                TicketManager ticketManager)
-        {
-            _userManager = userManager;
-            _projectRepository = projectRepository;
-            _ticketManager = ticketManager;
-        }
+            public AssignUserModel(ProjectManager projectManager,
+                    UserManager<ApplicationUser> userManager,
+                    TicketManager ticketManager)
+            {
+                _projectManager = projectManager;
+                _userManager = userManager;
+                _ticketManager = ticketManager;
+            }
             [BindProperty]
             public Ticket Ticket { get; set; }
             public List<ApplicationUser> Users { get; set; }
-            //I use single property for User to assign and user to remove
-            //Had to use "new" because pageModel already has a User
             public ApplicationUser AssignedUser{ get; set; }
             [TempData]
             public string Message { get; set; }
@@ -62,11 +59,6 @@ namespace TicketControl.Web.Pages.Tickets
 
                 if (User != null)
                 {
-                    //If the page gets refreshed and same query gets executed
-                    //Or if someone tries to add assign user
-                    //if (Ticket.AssignedUser != null && Ticket.AssignedUser == AssignedUser)
-                    //    ModelState.AddModelError("", 
-                    //        $"User {Ticket.AssignedUser.UserName} is already assigned to this ticket");
                     
                     await _ticketManager.AssignUserAsync(AssignedUser, Ticket.Id, User.Identity.Name);
                     Message = $"User {AssignedUser.UserName} assigned";
@@ -98,7 +90,6 @@ namespace TicketControl.Web.Pages.Tickets
             }
 
             //Helper functions
-            //TODO: Will need to update this method so it gets only users assigned to the tickets project
             public async Task GetUsersNotAssigned()
             {
                 await GetUsersForTicketsProject();
@@ -109,7 +100,7 @@ namespace TicketControl.Web.Pages.Tickets
             public async Task GetUsersForTicketsProject()
             {
                 Users = new();
-                var project = await _projectRepository.GetByIdAsync(Ticket.ProjectId);
+                var project = await _projectManager.GetByIdAsync(Ticket.ProjectId);
                 Users = project.ApplicationUsers.ToList();
             }
         }

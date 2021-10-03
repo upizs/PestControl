@@ -9,8 +9,8 @@ namespace TicketControl.Data.Contracts
 {
     public interface ICommentRepository : IRepositoryBase<Comment>
     {
-        Task<IEnumerable<Comment>> GetCommentsByProject(int projectId);
-        Task<IEnumerable<Comment>> GetCommentsByTicket(int ticketId);
-        Task<IEnumerable<Comment>> GetCommentsByUser(string userId);
+        Task<ICollection<Comment>> GetCommentsByProject(int projectId);
+        Task<ICollection<Comment>> GetCommentsByTicket(int ticketId);
+        Task<ICollection<Comment>> GetCommentsByUser(string userId);
     }
 }

@@ -47,7 +47,10 @@ namespace TicketControl.Data.Models
         [Key]
         public int Id { get; set; }
         public Priority Priority { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }
@@ -55,9 +58,9 @@ namespace TicketControl.Data.Models
         public Status Status { get; set; }
         public Types Type { get; set; }
         [Display(Name ="Date Created")]
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         [Display(Name = "Date Last Updated")]
-        public DateTimeOffset DateUpdated { get; set; }
+        public DateTime DateUpdated { get; set; }
         [ForeignKey("AssignedUserId")]
         [Display(Name = "Assigned User")]
         public ApplicationUser AssignedUser { get; set; }

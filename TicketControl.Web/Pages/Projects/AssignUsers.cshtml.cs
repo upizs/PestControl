@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TicketControl.BLL;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
@@ -16,30 +17,28 @@ namespace TicketControl.Web.Pages.Projects
     [Authorize(Roles = "Admin")]
     public class AssignUsersModel : PageModel
     {
-        private readonly IProjectRepository _projectRepository;
+        #region Properties and Constructor
+        private readonly ProjectManager _projectManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        //private IEnumerable<ApplicationUser> users;
-
-        public AssignUsersModel(IProjectRepository projectRepository, 
+        public AssignUsersModel(ProjectManager projectManager,
             UserManager<ApplicationUser> userManager)
         {
-            _projectRepository = projectRepository;
+            _projectManager = projectManager;
             _userManager = userManager;
         }
         [BindProperty]
         public Project Project { get; set; }
         public IEnumerable<ApplicationUser> Users { get; set; }
-        //I use single property for User to assign and user to remove
-        //Had to use "new" because pageModel already has a User
-        public new ApplicationUser User { get; set; }
+        //TODO: Find a better name for universalUser
+        public ApplicationUser AssignedUser { get; set; }
         public IEnumerable<ApplicationUser> AssignedUsers { get; set; }
         public string Message { get; set; }
-        
+        #endregion
 
         public async Task OnGet(int projectId)
         {
-            Project = await _projectRepository.GetByIdAsync(projectId);
+            Project = await _projectManager.GetByIdAsync(projectId);
             if(Project == null)
                 RedirectToPage("./NotFound");
             
@@ -53,18 +52,18 @@ namespace TicketControl.Web.Pages.Projects
 
         public async Task<IActionResult> OnPostAssign(string assignedUserId)
         {
-            User = await _userManager.FindByIdAsync(assignedUserId);
+            AssignedUser = await _userManager.FindByIdAsync(assignedUserId);
             //Doesnt post all the Project properties, so I have to find it again
-            Project = await _projectRepository.GetByIdAsync(Project.Id);
+            Project = await _projectManager.GetByIdAsync(Project.Id);
             
-            if (User != null)
+            if (AssignedUser != null)
             {
-                if (Project.ApplicationUsers.Any() && Project.ApplicationUsers.Contains(User))
+                if (Project.ApplicationUsers.Any() && Project.ApplicationUsers.Contains(AssignedUser))
                     ModelState.AddModelError("", "User already added");
                 else
                 {
-                    await _projectRepository.AssignUser(User, Project.Id);
-                    Message = $"User {User.UserName} added";
+                    await _projectManager.AssignUserAsync(AssignedUser, Project.Id, User.Identity.Name);
+                    Message = $"User {AssignedUser.UserName} added";
                 }
             }
             AssignedUsers = Project.ApplicationUsers.ToList();
@@ -76,19 +75,19 @@ namespace TicketControl.Web.Pages.Projects
 
         public async Task<IActionResult> OnPostRemove(string userToRemoveId)
         {
-            User = await _userManager.FindByIdAsync(userToRemoveId);
-            Project = await _projectRepository.GetByIdAsync(Project.Id);
+            AssignedUser = await _userManager.FindByIdAsync(userToRemoveId);
+            Project = await _projectManager.GetByIdAsync(Project.Id);
             
 
-            if (User != null)
+            if (AssignedUser != null)
             {
-                if (Project.ApplicationUsers.Any() && !Project.ApplicationUsers.Contains(User))
+                if (Project.ApplicationUsers.Any() && !Project.ApplicationUsers.Contains(AssignedUser))
                     ModelState.AddModelError("", "User is not assigned on this project");
 
                 else
                 {
-                    await _projectRepository.RemoveUser(User, Project.Id);
-                    Message = $"User {User.UserName} removed";
+                    await _projectManager.RemoveUserAsync(AssignedUser, Project.Id, User.Identity.Name);
+                    Message = $"User {AssignedUser.UserName} removed";
                 }
             }
             if (Project.ApplicationUsers.Any())

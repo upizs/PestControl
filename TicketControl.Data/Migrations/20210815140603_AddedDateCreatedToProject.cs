@@ -7,7 +7,7 @@ namespace TicketControl.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTimeOffset>(
+            migrationBuilder.AddColumn<DateTime>(
                 name: "DateCreated",
                 table: "Projects",
                 type: "datetimeoffset",

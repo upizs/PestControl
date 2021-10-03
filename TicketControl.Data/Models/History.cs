@@ -29,7 +29,7 @@ namespace TicketControl.Data.Models
         [StringLength(50)]
         public string NewValue { get; set; }
 
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public string User { get; set; }
 

@@ -50,7 +50,7 @@ namespace TicketControl.Web.Pages.Projects
             //Admin gets automatically asigned
             NewProject.ApplicationUsers.Add(user);
             NewProject.CreatedById = user.Id;
-            NewProject.DateCreated = DateTimeOffset.Now;
+            NewProject.DateCreated = DateTime.Now;
 
             await _projectRepository.CreateAsync(NewProject);
             

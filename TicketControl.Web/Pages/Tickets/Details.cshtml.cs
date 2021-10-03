@@ -14,23 +14,22 @@ namespace TicketControl.Web.Pages.Tickets
     public class DetailsModel : PageModel
     {
         private readonly TicketManager _ticketManager;
-        private readonly ICommentRepository _commentRepository;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserRepository _userRepository;
+        private readonly CommentManager _commentManager;
 
         public DetailsModel(TicketManager ticketManager,
             IUserRepository userRepository,
-            ICommentRepository commentRepository,
+            CommentManager commentManager,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager)
         {
-            _commentRepository = commentRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _ticketManager = ticketManager;
             _userRepository = userRepository;
-
+            _commentManager = commentManager;
         }
 
         
@@ -47,7 +46,7 @@ namespace TicketControl.Web.Pages.Tickets
             Ticket = await _ticketManager.GetByIdAsync(ticketId);
             if (Ticket == null)
                 RedirectToPage("./NotFound");
-            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+            Comments = await _commentManager.GetCommentsForTicket(ticketId);
             return Page();
         }
 
@@ -73,12 +72,12 @@ namespace TicketControl.Web.Pages.Tickets
             else
             {
                 Comment.UserId = _userManager.GetUserId(User);
-                Comment.Date = DateTimeOffset.Now;
+                Comment.Date = DateTime.Now;
                 Comment.TicketId = ticketId;
-                await _commentRepository.CreateAsync(Comment);
+                await _commentManager.CreateAsync(Comment);
             }
-            
-            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+
+            Comments = await _commentManager.GetCommentsForTicket(ticketId);
 
             //Needed to clean the bound property so that the comment form is empthy
             Comment = new Comment();
@@ -103,8 +102,11 @@ namespace TicketControl.Web.Pages.Tickets
             {
                 ModelState.AddModelError("", "You need to be signed in to make a comment.");
             }
-            else if (user.Id != Ticket.AssignedUserId)
-                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
+            //This check doesnt allow Admin to close the tickets if they are not assigned to him.
+            //Maybe I should Automatically assign tickets to Admin when marked as done
+            //But that would ruin Developers Done count.
+            //else if (user.Id != Ticket.AssignedUserId)
+            //    ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
             #endregion
 
             else
@@ -112,7 +114,7 @@ namespace TicketControl.Web.Pages.Tickets
                 Ticket.Status = status;
                 await _ticketManager.UpdateAsync(Ticket, user.UserName);
             }
-            Comments = await _commentRepository.GetCommentsByTicket(ticketId);
+            Comments = await _commentManager.GetCommentsForTicket(ticketId);
             return Page();
         }
 

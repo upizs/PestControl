@@ -73,7 +73,7 @@ namespace TicketControl.Web.Pages.Projects
             {
                 //Create a new comment
                 Comment.UserId = _userManager.GetUserId(User);
-                Comment.Date = DateTimeOffset.Now;
+                Comment.Date = DateTime.Now;
                 Comment.ProjectId = projectId;
                 await _commentRepository.CreateAsync(Comment);
             }

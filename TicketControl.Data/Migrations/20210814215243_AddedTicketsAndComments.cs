@@ -19,8 +19,8 @@ namespace TicketControl.Data.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    DateUpdated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetimeoffset", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetimeoffset", nullable: false),
                     AssignedUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SubmittedUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -57,7 +57,7 @@ namespace TicketControl.Data.Migrations
                     TicketId = table.Column<int>(type: "int", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: true),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {

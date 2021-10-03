@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TicketControl.BLL;
+using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
@@ -14,17 +16,17 @@ namespace TicketControl.Web.Pages.Tickets
     [Authorize(Roles ="Admin")]
     public class EditModel : PageModel
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly TicketManager _ticketManager;
+        private readonly ProjectManager _projectManager;
         private readonly IHtmlHelper _htmlHelper;
-        private readonly IProjectRepository _projectRepository;
 
-        public EditModel(ITicketRepository ticketRepository,
-            IHtmlHelper htmlHelper,
-            IProjectRepository projectRepository)
+        public EditModel(TicketManager ticketManager,
+            ProjectManager projectManager,
+            IHtmlHelper htmlHelper)
         {
-            _ticketRepository = ticketRepository;
+            _ticketManager = ticketManager;
+            _projectManager = projectManager;
             _htmlHelper = htmlHelper;
-            _projectRepository = projectRepository;
         }
         [BindProperty]
         public Ticket Ticket { get; set; }
@@ -34,30 +36,33 @@ namespace TicketControl.Web.Pages.Tickets
 
         public async Task<IActionResult> OnGet(int ticketId)
         {
-            Ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            Ticket = await _ticketManager.GetByIdAsync(ticketId);
             if (Ticket == null)
                 return RedirectToPage("./NotFound");
-            Projects = await _projectRepository.GetAllAsync();
-            Priorities = _htmlHelper.GetEnumSelectList<Priority>();
-            Types = _htmlHelper.GetEnumSelectList<Types>();
+            await GetallListsReady();
             return Page();
         }
+
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                await _ticketRepository.UpdateAsync(Ticket);
+                await _ticketManager.UpdateAsync(Ticket, User.Identity.Name);
                 TempData["Message"] = $"Ticket {Ticket.Title} updated";
                 return RedirectToPage("./Index");
             }
 
-            Projects = await _projectRepository.GetAllAsync();
-            Priorities = _htmlHelper.GetEnumSelectList<Priority>();
-            Types = _htmlHelper.GetEnumSelectList<Types>();
+            await GetallListsReady();
             return Page();
         }
 
-        
+        private async Task GetallListsReady()
+        {
+            Projects = await _projectManager.GetAllProjectsAsync();
+            Priorities = _htmlHelper.GetEnumSelectList<Priority>();
+            Types = _htmlHelper.GetEnumSelectList<Types>();
+        }
+
     }
 }

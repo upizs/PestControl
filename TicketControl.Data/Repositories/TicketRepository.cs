@@ -96,7 +96,7 @@ namespace TicketControl.Data.Repositories
 
         public async Task<bool> UpdateAsync(Ticket updatedEntity)
         {
-            updatedEntity.DateUpdated = DateTimeOffset.Now;
+            updatedEntity.DateUpdated = DateTime.Now;
             var entity = _db.Tickets.Attach(updatedEntity);
             entity.State = EntityState.Modified;
             return await SaveAsync();
@@ -107,7 +107,7 @@ namespace TicketControl.Data.Repositories
         {
             var ticket = await GetByIdAsync(ticketId);
             ticket.AssignedUserId = userId;
-            ticket.DateUpdated = DateTimeOffset.Now;
+            ticket.DateUpdated = DateTime.Now;
             ticket.Status = Status.Assigned;
             return await SaveAsync();
         }
@@ -117,7 +117,7 @@ namespace TicketControl.Data.Repositories
         {
             var ticket = await GetByIdAsync(ticketId);
             ticket.AssignedUserId = null;
-            ticket.DateUpdated = DateTimeOffset.Now;
+            ticket.DateUpdated = DateTime.Now;
             ticket.Status = Status.NotAssigned;
             return await SaveAsync();
         }

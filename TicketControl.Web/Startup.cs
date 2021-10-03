@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,11 +9,8 @@ using TicketControl.Data.Contracts;
 using TicketControl.Data.Data;
 using TicketControl.Data.Models;
 using TicketControl.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TicketControl.BLL.Managers;
+using TicketControl.BLL;
 
 namespace TicketControl.Web
 {
@@ -46,6 +42,9 @@ namespace TicketControl.Web
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHistoryRepository, HistoryRepository>();
             services.AddScoped<TicketManager>();
+            services.AddScoped<ProjectManager>();
+            services.AddScoped<HistoryManager>();
+            services.AddScoped<CommentManager>();
 
             //Identity settings
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
