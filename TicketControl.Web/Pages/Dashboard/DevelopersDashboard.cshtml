@@ -26,27 +26,15 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-m font-weight-bold text-warning text-uppercase mb-1">
-                            @if (User.IsInRole("Admin"))
-                            {
-
-                                @:Tickets Not Assigned
-                            }
-                            else
-                            {
-                                @:Assigned Tickets
-                            }
+                            
+                                Assigned Tickets
+                            
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            @if (User.IsInRole("Admin"))
-                            {
+                            
+                                @Model.Statistics.AssignedTicketCount
 
-                                @Model.NotAssignedTicketCount
-                            }
-                            else
-                            {
-                                @Model.AssignedTicketCount
-
-                            }
+                           
                         </div>
                     </div>
                     <div class="col-auto">
@@ -66,7 +54,7 @@
                         <div class="text-m font-weight-bold text-danger text-uppercase mb-1">
                             High Priority
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.HighPriorityTicketCount</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Statistics.HighPriorityTicketCount</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-fire-alt fa-3x text-gray-300"></i>
@@ -84,7 +72,7 @@
                         <div class="text-m font-weight-bold text-info text-uppercase mb-1">
                             Done Tickets
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DoneTicketCount</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Statistics.DoneTicketCount</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-check fa-3x text-gray-300"></i>
@@ -100,10 +88,10 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-4">
                         <div class="text-m font-weight-bold text-success text-uppercase mb-1">
-                            Percentage Done <span class="float-right">@Model.DonePercentage%</span>
+                            Percentage Done <span class="float-right">@Model.Statistics.DonePercentage%</span>
                         </div>
                         <div class="progress mb-0 mt-4">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: @Model.DonePercentage%"
+                            <div class="progress-bar bg-success" role="progressbar" style="width: @Model.Statistics.DonePercentage%"
                                  aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
@@ -139,7 +127,7 @@
                 <span class="badge badge-light">Not Assigned</span>
             </div>
             <!--Projects-->
-            @foreach (var project in Model.ProjectsAndTheirTicketsByStatus)
+            @foreach (var project in Model.Statistics.ProjectsAndTheirTicketsByStatus)
             {
                 <div class="text-lg font-weight-bold">
                     @project.Key
@@ -220,8 +208,8 @@
     <script>
         $(function () {
             var priorityChartCanvas = $('#priorityChart').get(0).getContext('2d')
-            var labels = @JavaScriptConverter.SerializeObject(Model.Priorities.ToArray());
-            var data = @JavaScriptConverter.SerializeObject(Model.PriorityCounts.ToArray());
+            var labels = @JavaScriptConverter.SerializeObject(Model.Statistics.Priorities.ToArray());
+            var data = @JavaScriptConverter.SerializeObject(Model.Statistics.PriorityCounts.ToArray());
             var barChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,

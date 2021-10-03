@@ -30,7 +30,7 @@ namespace TicketControl.Data.Repositories
             //Have to include all these to make Cascade deletion
             var ticket = await _db.Tickets
                 .Include(t=>t.Comments)
-                .Include(p => p.Histories)
+                .Include(t => t.Histories)
                 .FirstOrDefaultAsync(t => t.Id == entity.Id);
             _db.Tickets.Remove(ticket);
             return await SaveAsync();
@@ -41,10 +41,14 @@ namespace TicketControl.Data.Repositories
             return await _db.Tickets.AnyAsync(p => p.Id == id);
         }
 
-        public async Task<Ticket> FindByIdAsync(int id)
-        {
+        public async Task<Ticket> GetByIdAsync(int id)
+        { 
+            //I include no tracking to call the entity again
+            //and compare to changed entity
             return await _db.Tickets
+                .AsNoTracking()
                 .Include(p => p.Project)
+                .Include(t => t.Comments)
                 .Include(p=>p.AssignedUser)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -101,7 +105,7 @@ namespace TicketControl.Data.Repositories
         //Assign and Remove Users
         public async Task<bool> AssignUser(string userId, int ticketId)
         {
-            var ticket = await FindByIdAsync(ticketId);
+            var ticket = await GetByIdAsync(ticketId);
             ticket.AssignedUserId = userId;
             ticket.DateUpdated = DateTimeOffset.Now;
             ticket.Status = Status.Assigned;
@@ -111,18 +115,13 @@ namespace TicketControl.Data.Repositories
 
         public async Task<bool> RemoveUser(int ticketId)
         {
-            var ticket = await FindByIdAsync(ticketId);
+            var ticket = await GetByIdAsync(ticketId);
             ticket.AssignedUserId = null;
             ticket.DateUpdated = DateTimeOffset.Now;
             ticket.Status = Status.NotAssigned;
             return await SaveAsync();
         }
 
-        //Ticket interaction with project 
-        public async Task<int> CountTicketsForProject(int projectId)
-        {
-            return await _db.Tickets.Where(t => t.ProjectId == projectId).CountAsync();
-        }
 
         public async Task<ICollection<Ticket>> GetAllTicketsForProject(int projectId)
         {
@@ -173,7 +172,11 @@ namespace TicketControl.Data.Repositories
                 .OrderBy(t => t.DateCreated)
                 .ToListAsync();
         }
-
+        /// <summary>
+        /// Gets Tickets Assigned to the user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>ICollection<Ticket></Ticket></returns>
         public async Task<ICollection<Ticket>> GetTicketsByUser(string userId)
         {
             return await _db.Tickets

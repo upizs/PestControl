@@ -45,7 +45,7 @@ namespace TicketControl.Data.Repositories
             return await _db.Projects.AnyAsync(p => p.Id == id);
         }
 
-        public async Task<Project> FindByIdAsync(int id)
+        public async Task<Project> GetByIdAsync(int id)
         {
             return await _db.Projects
                 .Include(p => p.ApplicationUsers)
@@ -101,13 +101,13 @@ namespace TicketControl.Data.Repositories
 
         public async Task<bool> AssignUser(ApplicationUser user, int projectId)
         {
-            var project = await FindByIdAsync(projectId);
+            var project = await GetByIdAsync(projectId);
             project.ApplicationUsers.Add(user);
             return await SaveAsync();
         }
         public async Task<bool> RemoveUser(ApplicationUser user, int projectId)
         {
-            var project = await FindByIdAsync(projectId);
+            var project = await GetByIdAsync(projectId);
             project.ApplicationUsers.Remove(user);
             return await SaveAsync();
         }

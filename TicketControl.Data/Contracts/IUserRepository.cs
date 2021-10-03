@@ -10,5 +10,6 @@ namespace TicketControl.Data.Contracts
     public interface IUserRepository
     {
         Task<bool> DeleteUserAsync(string userId);
+        Task<ApplicationUser> GetUntrackedUser(string userName);
     }
 }

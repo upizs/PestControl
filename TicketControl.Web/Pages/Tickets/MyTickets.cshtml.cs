@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
@@ -14,13 +15,13 @@ namespace TicketControl.Web.Pages.Tickets
     [Authorize]
     public class MyTicketsModel : PageModel
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly TicketManager _ticketManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public MyTicketsModel(ITicketRepository ticketRepository,
+        public MyTicketsModel(TicketManager ticketManager,
             UserManager<ApplicationUser> userManager)
         {
-            _ticketRepository = ticketRepository;
+            _ticketManager =ticketManager ;
             _userManager = userManager;
         }
 
@@ -37,66 +38,14 @@ namespace TicketControl.Web.Pages.Tickets
             //Admin has to check and close all the done tickets
             if (User.IsInRole("Admin"))
             {
-                Tickets = await _ticketRepository.GetTicketsByStatus(Status.Done);
-                var notAssignedTickets = await _ticketRepository.GetTicketsByStatus(Status.NotAssigned);
-                Tickets = Tickets.Concat(notAssignedTickets);
-
+                Tickets = await _ticketManager.GetTicketsForAdminAsync();
             }
             else
-                Tickets = await _ticketRepository.GetTicketsByUser(PageUser.Id);
+                Tickets = await _ticketManager.GetAssignedTicketsForUserAsync(PageUser);
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostNotDone()
-        {
-            PageUser = await _userManager.GetUserAsync(User);
-            if (PageUser == null)
-                return RedirectToPage("/Identity/Login");
-
-            Tickets = await _ticketRepository.GetAllNotDoneTicketsForUser(PageUser.Id);
-            return Page();
-        }
-
-        //Test this action with annonymous
-        public async Task<IActionResult> OnPostDone()
-        {
-            PageUser = await _userManager.GetUserAsync(User);
-            if (PageUser == null)
-                return RedirectToPage("/Identity/Login");
-            Tickets = await _ticketRepository.GetTicketsByStatus(Status.Done, PageUser.Id);
-            return Page();
-        }
-        public async Task<IActionResult> OnPostClosed()
-        {
-            PageUser = await _userManager.GetUserAsync(User);
-            if (PageUser == null)
-                return RedirectToPage("/Identity/Login");
-            Tickets = await _ticketRepository.GetTicketsByStatus(Status.Closed);
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostNotAssigned()
-        {
-            PageUser = await _userManager.GetUserAsync(User);
-            if (PageUser == null)
-                return RedirectToPage("/Identity/Login");
-            Tickets = await _ticketRepository.GetTicketsByStatus(Status.NotAssigned);
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostPriority()
-        {
-            PageUser = await _userManager.GetUserAsync(User);
-            if (PageUser == null)
-                return RedirectToPage("/Identity/Login");
-            //If admin then get all high tickets
-            if(User.IsInRole("Admin"))
-                Tickets = await _ticketRepository.GetAllHighPriorityTickets();
-            //If developer then only ones assigned to user
-            Tickets = await _ticketRepository.GetAllHighPriorityTickets( PageUser.Id);
-            return Page();
-        }
 
     }
 }

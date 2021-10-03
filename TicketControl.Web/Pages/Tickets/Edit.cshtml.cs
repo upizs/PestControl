@@ -34,7 +34,7 @@ namespace TicketControl.Web.Pages.Tickets
 
         public async Task<IActionResult> OnGet(int ticketId)
         {
-            Ticket = await _ticketRepository.FindByIdAsync(ticketId);
+            Ticket = await _ticketRepository.GetByIdAsync(ticketId);
             if (Ticket == null)
                 return RedirectToPage("./NotFound");
             Projects = await _projectRepository.GetAllAsync();

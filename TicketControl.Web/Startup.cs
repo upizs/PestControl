@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TicketControl.BLL.Managers;
 
 namespace TicketControl.Web
 {
@@ -43,6 +44,8 @@ namespace TicketControl.Web
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IHistoryRepository, HistoryRepository>();
+            services.AddScoped<TicketManager>();
 
             //Identity settings
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

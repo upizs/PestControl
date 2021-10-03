@@ -37,7 +37,7 @@ namespace TicketControl.Data.Repositories
             return await _db.Comments.AnyAsync(p => p.Id == id);
         }
 
-        public async Task<Comment> FindByIdAsync(int id)
+        public async Task<Comment> GetByIdAsync(int id)
         {
             return await _db.Comments.FindAsync(id);
         }

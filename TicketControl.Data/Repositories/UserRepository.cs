@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketControl.Data.Data;
 
 namespace TicketControl.Data.Repositories
 {
@@ -14,10 +15,13 @@ namespace TicketControl.Data.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly AuthDbContext _db;
 
-        public UserRepository(UserManager<ApplicationUser> userManager)
+        public UserRepository(UserManager<ApplicationUser> userManager,
+            AuthDbContext db)
         {
             _userManager = userManager;
+            _db = db;
         }
         public async Task<bool> DeleteUserAsync(string userId)
         {
@@ -33,6 +37,12 @@ namespace TicketControl.Data.Repositories
 
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded;
+        }
+
+        public async Task<ApplicationUser> GetUntrackedUser(string userName)
+        {
+            return await _db.Users.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UserName == userName);
         }
     }
 }

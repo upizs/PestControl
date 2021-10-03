@@ -23,7 +23,7 @@ namespace TicketControl.Web.Pages.Projects
         public Project Project { get; set; }
         public async Task<IActionResult> OnGet(int projectId)
         {
-            Project = await _projectRepository.FindByIdAsync(projectId);
+            Project = await _projectRepository.GetByIdAsync(projectId);
             if (Project == null)
                 return RedirectToPage("./NotFound");
 

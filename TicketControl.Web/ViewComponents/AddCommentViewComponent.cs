@@ -33,7 +33,7 @@ namespace TicketControl.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int? projectId, int? ticketId)
         {
-            var project = await _projectRepository.FindByIdAsync(projectId.Value);
+            var project = await _projectRepository.GetByIdAsync(projectId.Value);
             var model = new AddCommentModel
             {
                 ticketId = ticketId.Value,

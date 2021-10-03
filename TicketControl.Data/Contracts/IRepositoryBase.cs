@@ -10,7 +10,7 @@ namespace TicketControl.Data.Contracts
     public interface IRepositoryBase<T> where T : class
     {
         Task<ICollection<T>> GetAllAsync();
-        Task<T> FindByIdAsync(int id);
+        Task<T> GetByIdAsync(int id);
         Task<bool> ExistsAsync(int id);
 
         //returns bool to let me know if the action was succesful

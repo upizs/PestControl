@@ -26,7 +26,7 @@ namespace TicketControl.Web.Pages.Comments
         public string ReturnUrl { get; set; }
         public async Task<IActionResult> OnGet(int commentId, string returnUrl)
         {
-            Comment = await _commentRepository.FindByIdAsync(commentId);
+            Comment = await _commentRepository.GetByIdAsync(commentId);
             returnUrl = returnUrl ?? Url.Content("/Index");
 
             var user = await _userManager.GetUserAsync(User);

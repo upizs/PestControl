@@ -39,7 +39,7 @@ namespace TicketControl.Web.Pages.Projects
 
         public async Task OnGet(int projectId)
         {
-            Project = await _projectRepository.FindByIdAsync(projectId);
+            Project = await _projectRepository.GetByIdAsync(projectId);
             if(Project == null)
                 RedirectToPage("./NotFound");
             
@@ -55,7 +55,7 @@ namespace TicketControl.Web.Pages.Projects
         {
             User = await _userManager.FindByIdAsync(assignedUserId);
             //Doesnt post all the Project properties, so I have to find it again
-            Project = await _projectRepository.FindByIdAsync(Project.Id);
+            Project = await _projectRepository.GetByIdAsync(Project.Id);
             
             if (User != null)
             {
@@ -77,7 +77,7 @@ namespace TicketControl.Web.Pages.Projects
         public async Task<IActionResult> OnPostRemove(string userToRemoveId)
         {
             User = await _userManager.FindByIdAsync(userToRemoveId);
-            Project = await _projectRepository.FindByIdAsync(Project.Id);
+            Project = await _projectRepository.GetByIdAsync(Project.Id);
             
 
             if (User != null)

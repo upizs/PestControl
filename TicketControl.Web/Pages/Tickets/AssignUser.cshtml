@@ -65,13 +65,12 @@
                 <td scope="row">@user.UserName</td>
                 <td>@user.Email</td>
                 <td>
-                    @if(Model.Ticket.AssignedUser == null) { 
                     <form asp-page-handler="assign" mothod="post">
                         <button type="submit" class="btn btn-primary btn-sm">Assign</button>
                         <input type="hidden" name="assignedUserId" value="@user.Id" />
                         <input type="hidden" asp-for="Ticket.Id" />
                     </form>
-                    }
+                    
                 </td>
 
             </tr>

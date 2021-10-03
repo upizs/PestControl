@@ -24,7 +24,9 @@ namespace TicketControl.Data.Models
 
     public enum Types
     {
+        [Display(Name = "Error")]
         Error,
+        [Display(Name = "Feature")]
         Feature
     }
     public enum Status

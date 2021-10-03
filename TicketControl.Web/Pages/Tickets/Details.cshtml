@@ -23,7 +23,16 @@
 <p>Description: @Model.Ticket.Description</p>
 <p>Priority: @Model.Ticket.Priority</p>
 <p>Status: @Model.Ticket.Status</p>
-<p>Assigned User: @Model.Ticket.AssignedUser</p>
+<p>Assigned User: @if (Model.Ticket.AssignedUser != null)
+            {
+    @Model.Ticket.AssignedUser.UserName;
+            }
+else
+            {
+                @:None
+            }
+
+</p>
 <p>Date Created: @Model.Ticket.DateCreated</p>
 <p>Date Updated: @Model.Ticket.DateUpdated</p>
 <p>Submited by: @Model.Ticket.SubmittedByUser</p>
@@ -56,13 +65,14 @@
 {
     <!--Start working on ticket button-->
 
-    <form method="post" asp-page-handler="inprogress">
-        <input type="hidden" asp-for="Ticket.Id" />
-        <button type="submit" class="btn btn-info btn-icon-split ">
-            <span class="icon text-white"><i class="fas fa-keyboard"></i></span>
-            <span class="text">Start working on!</span>
-        </button>
-    </form>
+<form method="post" asp-page-handler="changestatus">
+    <input type="hidden" asp-for="Ticket.Id" />
+    <input type="hidden" name="status" value="@Status.InProgress" />
+    <button type="submit" class="btn btn-info btn-icon-split ">
+        <span class="icon text-white"><i class="fas fa-keyboard"></i></span>
+        <span class="text">Start working on!</span>
+    </button>
+</form>
 
 }
 @if (UserManager.GetUserId(User) == Model.Ticket.AssignedUserId
@@ -70,8 +80,9 @@
 {
     <!--Ticket done button-->
 
-    <form method="post" asp-page-handler="done">
+    <form method="post" asp-page-handler="changestatus">
         <input type="hidden" asp-for="Ticket.Id" />
+        <input type="hidden" name="status" value="@Status.Done"/>
         <button type="submit" class="btn btn-success btn-icon-split ">
             <span class="icon text-white"><i class="fas fa-check"></i></span>
             <span class="text">Done!</span>
@@ -93,8 +104,9 @@
     if (Model.Ticket.Status == Status.Done)
     {
         <!--Close ticket button-->
-        <form method="post" asp-page-handler="close">
+        <form method="post" asp-page-handler="changestatus">
             <input type="hidden" asp-for="Ticket.Id" />
+            <input type="hidden" name="status" value="@Status.Closed" />
             <button type="submit" class="btn btn-success btn-icon-split ">
                 <span class="icon text-white"><i class="fas fa-check"></i></span>
                 <span class="text">Close!</span>

@@ -37,7 +37,7 @@ namespace TicketControl.Data.Repositories
             return await _db.Histories.AnyAsync(h =>h.HistoryId == id);
         }
 
-        public async Task<History> FindByIdAsync(int id)
+        public async Task<History> GetByIdAsync(int id)
         {
             return await _db.Histories
                 .Include(h => h.Ticket)

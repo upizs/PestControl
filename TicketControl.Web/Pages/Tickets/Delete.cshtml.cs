@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
@@ -13,18 +14,18 @@ namespace TicketControl.Web.Pages.Tickets
     [Authorize(Roles ="Admin")]
     public class DeleteModel : PageModel
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly TicketManager _ticketManager;
 
-        public DeleteModel(ITicketRepository ticketRepository)
+        public DeleteModel(TicketManager ticketManager)
         {
-            _ticketRepository = ticketRepository;
+            _ticketManager = ticketManager;
         }
         [BindProperty]
         public Ticket Ticket { get; set; }
 
         public async Task<IActionResult> OnGet(int ticketId)
         {
-            Ticket = await _ticketRepository.FindByIdAsync(ticketId);
+            Ticket = await _ticketManager.GetByIdAsync(ticketId);
             if (Ticket == null)
                 return RedirectToPage("./NotFound");
 
@@ -38,7 +39,7 @@ namespace TicketControl.Web.Pages.Tickets
                 return RedirectToPage("./NotFound");
 
             TempData["Message"] = $"Ticket {Ticket.Title} deleted!";
-            await _ticketRepository.DeleteAsync(Ticket);
+            await _ticketManager.DeleteAsync(Ticket);
 
             return RedirectToPage("./Index");
         }

@@ -40,7 +40,7 @@ namespace TicketControl.Web.Pages.Projects
         public string Message { get; set; }
         public async Task<IActionResult> OnGet(int projectId)
         {
-            Project = await _projectRepository.FindByIdAsync(projectId);
+            Project = await _projectRepository.GetByIdAsync(projectId);
             if (Project == null)
                 return RedirectToPage("./NotFound");
             Tickets = await _ticketRepository.GetAllTicketsForProject(projectId);
@@ -48,10 +48,10 @@ namespace TicketControl.Web.Pages.Projects
 
             return Page();
         }
-
+        
         public async Task<IActionResult> OnPostComment(int projectId)
         {
-            Project = await _projectRepository.FindByIdAsync(projectId);
+            Project = await _projectRepository.GetByIdAsync(projectId);
             Tickets = await _ticketRepository.GetAllTicketsForProject(projectId);
 
             //Validation

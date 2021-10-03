@@ -12,9 +12,6 @@ namespace TicketControl.Data.Contracts
         Task<ICollection<Ticket>> Search(string searchKey);
         Task<bool> AssignUser(string userId, int ticketId);
         Task<bool> RemoveUser( int ticketId);
-
-        //Return how many tickets for requested project
-        Task<int> CountTicketsForProject(int projectId);
         //Return all the tickets for requested project
         Task<ICollection<Ticket>> GetAllTicketsForProject(int projectId);
         ICollection<Ticket> GetAllTicketsForProjects(IEnumerable<Project> projects);

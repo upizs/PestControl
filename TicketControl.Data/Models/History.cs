@@ -31,7 +31,7 @@ namespace TicketControl.Data.Models
 
         public DateTimeOffset DateCreated { get; set; }
 
-        public Guid UserId { get; set; }
+        public string User { get; set; }
 
     }
 }
