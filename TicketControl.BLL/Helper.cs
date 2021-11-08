@@ -48,7 +48,7 @@ namespace TicketControl.BLL
         /// </summary>
         /// <param name="projects"></param>
         /// <returns>List<Tikcet></Tikcet></returns>
-        public List<Ticket> GetTicketsFromProjects(ICollection<Project> projects)
+        public List<Ticket> GetTicketsFromProjects(IEnumerable<Project> projects)
         {
             var tickets = new List<Ticket>();
             foreach (var project in projects)

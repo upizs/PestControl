@@ -6,16 +6,16 @@
 
 
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+    <a class="nav-link light-text" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
         <i class="fas fa-user-alt"></i>
-        <span class="ml-lg-2 mr-lg-2 d-none d-lg-inline text-gray-800">@User.Identity.Name </span>
+        <span class="ml-lg-2 mr-lg-2 d-none d-lg-inline light-text">@User.Identity.Name </span>
     </a>
 </li>
 <li class="nav-item">
     <form  asp-page="/Identity/Logout" asp-route-returnUrl="@Context.Request.Path">
-        <button type="submit" class="nav-link btn btn-link text-dark">
+        <button type="submit" class="nav-link btn btn-link light-text">
             <i class="fas fa-sign-out-alt"></i>
-            <span class="ml-lg-2 mr-lg-2 d-none d-lg-inline text-gray-800">Logout</span>
+            <span class="ml-lg-2 mr-lg-2 d-none d-lg-inline light-text">Logout</span>
         </button>
     </form>
 </li>

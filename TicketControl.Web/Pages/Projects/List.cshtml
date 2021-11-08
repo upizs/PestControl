@@ -13,7 +13,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">My Projects</h1>
+    <h1 class="h3 mb-0 light-text">My Projects</h1>
     @if (User.IsInRole("Admin"))
     {
     <a asp-page="./Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
@@ -21,7 +21,7 @@
     </a>
     }
 </div>
-<div class="card card-shadow mt-3">
+<div class="card lighter-bg card-shadow mt-3">
 
     <table class="table" style="width:100%" id="universalTable">
         <thead>

@@ -54,10 +54,19 @@ namespace TicketControl.BLL.Managers
         {
             return await _ticketRepository.DeleteAsync(ticket);
         }
+        public async Task<bool> Exists(int id)
+        {
+            return await _ticketRepository.ExistsAsync(id);
+        }
         public async Task<bool> SaveAsync()
         {
             return await _ticketRepository.SaveAsync();
         }
+        public async Task<ICollection<Ticket>> GetAllTicketsAsync()
+        {
+            return await _ticketRepository.GetAllAsync();
+        }
+
         public async Task<ICollection<Ticket>> GetAssignedTicketsForUserAsync(ApplicationUser user)
         {
             return await _ticketRepository.GetTicketsByUser(user.Id);

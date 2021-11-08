@@ -102,11 +102,8 @@ namespace TicketControl.Web.Pages.Tickets
             {
                 ModelState.AddModelError("", "You need to be signed in to make a comment.");
             }
-            //This check doesnt allow Admin to close the tickets if they are not assigned to him.
-            //Maybe I should Automatically assign tickets to Admin when marked as done
-            //But that would ruin Developers Done count.
-            //else if (user.Id != Ticket.AssignedUserId)
-            //    ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
+            else if (!User.IsInRole("Admin") || user.Id != Ticket.AssignedUserId)
+                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
             #endregion
 
             else

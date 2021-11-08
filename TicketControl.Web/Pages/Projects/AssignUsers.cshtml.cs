@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TicketControl.BLL;
+using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 

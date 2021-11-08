@@ -11,6 +11,7 @@ namespace TicketControl.Data.Models
     //Comments can be used for tickets or projects
     public class Comment
     {
+        [Key]
         public int Id { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser Author { get; set; }

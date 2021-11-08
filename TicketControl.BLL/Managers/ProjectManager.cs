@@ -1,33 +1,26 @@
 ﻿
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TicketControl.BLL.Managers;
 using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 
-namespace TicketControl.BLL
+namespace TicketControl.BLL.Managers
 {
     public class ProjectManager
     {
-        private readonly ITicketRepository _ticketRepository;
-        private readonly IHistoryRepository _historyRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly HistoryManager _historyManager;
 
-        public ProjectManager(ITicketRepository ticketRepository,
-            IHistoryRepository historyRepository,
+        public ProjectManager(
             IProjectRepository projectRepository,
             HistoryManager historyManager)
         {
-            _ticketRepository = ticketRepository;
-            _historyRepository = historyRepository;
             _projectRepository = projectRepository;
             _historyManager = historyManager;
         }
-        //TODO: Implement History recording with projects as well
+
         #region Standart methods
         public async Task<ICollection<Project>> GetAllProjectsAsync()
         {
@@ -41,6 +34,11 @@ namespace TicketControl.BLL
         public async Task<bool> Create(Project project)
         {
             return await _projectRepository.CreateAsync(project);
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await _projectRepository.ExistsAsync(id);
         }
 
         public async Task<Project> GetByIdAsync(int id)

@@ -1,0 +1,74 @@
+﻿/*My attempt on setting colors for better look and feel. 
+    This project onyl has dark theme, because its my favorite.
+*/
+
+:root {
+    /*Main background colors*/
+    --main-color: #2C394B;
+    --darker-main: #082032;
+    --lighter-main: #334756;
+    --contrast-main: #CEE6B4;
+    /*Text colors and Priority colors*/
+    --light-text: FBF6F0;
+    --warning-text: FAF0AF;
+    --success-text: A7E9AF;
+    --danger-text: F55C47;
+    --primary-text: CBEAED;
+    --dark-text: 131A24;
+    /*Status colors*/
+    --not-assigned: FFCC29;
+    --assigned: F55C47;
+    --in-progress: FFCC29;
+    --done: 81B214;
+    --closed: CEE6B4;
+    /*Button colors*/
+    /*Shadow colors*/
+    --dark-shadow: CEE6B4;
+    --lighter-shadow: CEE6B4;
+
+}
+
+body {
+    height: 100%;
+    background-color: #2C394B;
+}
+
+.darkest {
+    background-color: #082032;
+    background-size: cover;
+    color: #FBF6F0;
+}
+.lighter-bg {
+    background-color: #2C394B;
+    background-size: cover;
+}
+.contrast-bg {
+    background-color: #CEE6B4;
+    color: #131A24;
+}
+.light-text {
+    color: #FBF6F0;
+}
+
+#wrapper #content-wrapper {
+    background-color: #082032 !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #2C394B;
+    border: none;
+    background-clip: border-box;
+}
+
+
+
+
+
+

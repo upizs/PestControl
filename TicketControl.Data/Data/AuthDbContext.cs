@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using TicketControl.Data.Models;
 
 namespace TicketControl.Data.Data
@@ -21,7 +22,6 @@ namespace TicketControl.Data.Data
         //I use model builder to remove all the unnecessary rows (dont see value in them yet) 
         //Found out what Normalized Columns, Security Stamp,
         //Concurency are for, allowed them back in the DB.
-        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -37,6 +37,11 @@ namespace TicketControl.Data.Data
             //Because when Adding a List in User model, I got an exception
             modelBuilder.Entity<ApplicationUser>().HasMany( user => user.Tickets)
                 .WithOne(t =>t.AssignedUser).HasForeignKey(t => t.AssignedUserId);
+        }
+
+        public static implicit operator string(AuthDbContext v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
