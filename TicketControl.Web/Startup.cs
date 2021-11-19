@@ -80,7 +80,7 @@ namespace TicketControl.Web
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -100,7 +100,8 @@ namespace TicketControl.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
+            
             //SeedData.Seed(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>

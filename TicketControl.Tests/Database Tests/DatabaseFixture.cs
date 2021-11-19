@@ -5,15 +5,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Respawn;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TicketControl.BLL.Managers;
 using TicketControl.Data.Models;
 using TicketControl.Web;
 using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace TicketControl.Tests.Database_Tests
 {
@@ -50,7 +47,6 @@ namespace TicketControl.Tests.Database_Tests
 
             private readonly string _connectionString = "Data Source=DESKTOP-J0AU7B5\\THISSERVER;Initial Catalog=TicketControl;Integrated Security=True;";
         }
-        public ITestOutputHelper Output;
         public TicketManager TicketManager;
         public ProjectManager ProjectManager;
         public UserManager<ApplicationUser> UserManager;
@@ -71,7 +67,6 @@ namespace TicketControl.Tests.Database_Tests
         public async Task DeleteTestData()
         {
             await DeleteData.Delete(UserManager, TicketManager, ProjectManager);
-
         }
 
         public Task InitializeAsync()

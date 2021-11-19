@@ -56,6 +56,7 @@ namespace TicketControl.Data.Repositories
         {
             
             return await _db.Tickets
+                .AsNoTracking()
                 .Include(p => p.Project)
                 .Include(p => p.AssignedUser)
                 .OrderBy(p => p.DateCreated)

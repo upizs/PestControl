@@ -95,21 +95,21 @@ namespace TicketControl.Web.Pages.Tickets
             //conflicting with double tracking when updating ticket
             //TODO: Create a logger to see more details about the bug
             var user = await _userRepository.GetUntrackedUser(User.Identity.Name);
-            #region Validations
             if (Ticket == null)
                 RedirectToPage("./NotFound");
             if (!_signInManager.IsSignedIn(User))
             {
-                ModelState.AddModelError("", "You need to be signed in to make a comment.");
+                ModelState.AddModelError("", "You need to be signed in to make a change.");
             }
-            else if (!User.IsInRole("Admin") || user.Id != Ticket.AssignedUserId)
-                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
-            #endregion
-
-            else
+            else if (User.IsInRole("Admin") || user.Id == Ticket.AssignedUserId)
             {
                 Ticket.Status = status;
                 await _ticketManager.UpdateAsync(Ticket, user.UserName);
+            }
+
+            else
+            {
+                ModelState.AddModelError("", "You dont have the authorization to edit this ticket.");
             }
             Comments = await _commentManager.GetCommentsForTicket(ticketId);
             return Page();

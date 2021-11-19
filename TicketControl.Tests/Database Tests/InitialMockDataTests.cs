@@ -42,7 +42,15 @@ namespace TicketControl.Tests.Database_Tests
 
             Assert.True(notEmpthy);
         }
-
+        [Fact, Priority(5)]
+        public async void UserReturnsAssignedTickets()
+        {
+            var tickets = await fixture.TicketManager.GetAllTicketsAsync();
+            var ticket = tickets.FirstOrDefault();
+            var user = fixture.UserManager.Users.Where(u => u.UserName == "Brigitte").FirstOrDefault();
+            await fixture.TicketManager.AssignUserAsync(user, ticket.Id, "Test");
+            Assert.Equal(ticket.Id, user.Tickets.FirstOrDefault().Id);
+        }
         [Fact,Priority(5)]
         public async void MockUserExists()
         {
