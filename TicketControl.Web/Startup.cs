@@ -41,6 +41,7 @@ namespace TicketControl.Web
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHistoryRepository, HistoryRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<TicketManager>();
             services.AddScoped<ProjectManager>();
             services.AddScoped<HistoryManager>();

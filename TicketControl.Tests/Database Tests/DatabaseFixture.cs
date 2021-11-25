@@ -1,13 +1,12 @@
 ﻿
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Respawn;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TicketControl.BLL.Managers;
+using TicketControl.Data.Contracts;
 using TicketControl.Data.Models;
 using TicketControl.Web;
 using Xunit;
@@ -28,7 +27,7 @@ namespace TicketControl.Tests.Database_Tests
             _configuration = _factory.Services.GetRequiredService<IConfiguration>();
             _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
             _checkpoint = new Checkpoint();
-            GetManagers();
+            GetRepo();
         }
 
         public class TicketControlTestApplicationFactory
@@ -47,30 +46,20 @@ namespace TicketControl.Tests.Database_Tests
 
             private readonly string _connectionString = "Data Source=DESKTOP-J0AU7B5\\THISSERVER;Initial Catalog=TicketControl;Integrated Security=True;";
         }
-        public TicketManager TicketManager;
-        public ProjectManager ProjectManager;
-        public UserManager<ApplicationUser> UserManager;
+        public IGenericRepository<Ticket> TicketRepository {get;set;}
 
-        public void GetManagers()
+        public void GetRepo()
         {
             var scope = _scopeFactory.CreateScope();
-            TicketManager = scope.ServiceProvider.GetRequiredService<TicketManager>();
-            ProjectManager = scope.ServiceProvider.GetRequiredService<ProjectManager>();
-            UserManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            TicketRepository = scope.ServiceProvider.GetRequiredService<IGenericRepository<Ticket>>();
         }
 
-        public async Task SeedTestData()
-        {
-            await SeedData.Seed(UserManager, TicketManager, ProjectManager);
-            
-        }
-        public async Task DeleteTestData()
-        {
-            await DeleteData.Delete(UserManager, TicketManager, ProjectManager);
-        }
 
         public Task InitializeAsync()
-        => _checkpoint.Reset(_configuration.GetConnectionString("TicketControlSql"));
+        {
+            return Task.CompletedTask;
+        }
+        //=> _checkpoint.Reset(_configuration.GetConnectionString("TicketControlSql"));
         public Task DisposeAsync()
         {
             _factory?.Dispose();

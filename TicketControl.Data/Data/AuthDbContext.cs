@@ -36,7 +36,10 @@ namespace TicketControl.Data.Data
             //Defining relationship between these entities,
             //Because when Adding a List in User model, I got an exception
             modelBuilder.Entity<ApplicationUser>().HasMany( user => user.Tickets)
-                .WithOne(t =>t.AssignedUser).HasForeignKey(t => t.AssignedUserId);
+                .WithOne(Ticket => Ticket.AssignedUser).HasForeignKey(Ticket => Ticket.AssignedUserId);
+            modelBuilder.Entity<Ticket>().HasOne(Ticket => Ticket.Project)
+                .WithMany(Project => Project.Tickets)
+                .HasForeignKey(Ticket => Ticket.ProjectId);
         }
 
         public static implicit operator string(AuthDbContext v)
